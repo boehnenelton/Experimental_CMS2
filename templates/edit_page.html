@@ -1,0 +1,37 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<h1 class="text-3xl font-black mb-8 text-[#fe3626] uppercase tracking-tighter">Content Editor</h1>
+
+<form method="POST" class="bg-[#171717] p-10 rounded-3xl border border-gray-800 shadow-2xl flex flex-col gap-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {% with label='Page Title', name='title', value=p.title, required=True %}
+            {% include "components/backend/Form-Row.html" %}
+        {% endwith %}
+        
+        {% set cat_options = [] %}
+        {% for c in cats %}
+            {% do cat_options.append({'value': c.slug, 'label': c.name}) %}
+        {% endfor %}
+        
+        {% with label='Category', name='category', type='select', value=p.category_fk, options=cat_options %}
+            {% include "components/backend/Form-Row.html" %}
+        {% endwith %}
+    </div>
+
+    <input type="hidden" name="page_type" value="{{ p.page_type }}">
+
+    {% with label='Source Content (Raw HTML)', name='html_body', type='textarea', value=p.html_body, help=(p.page_type | upper) + ' MODE ACTIVE' %}
+        {% include "components/backend/Form-Row.html" %}
+    {% endwith %}
+
+    <div class="flex gap-4 pt-4">
+        <button type="submit" class="bg-[#fe3626] hover:bg-[#d92c1e] px-12 py-4 rounded-xl font-black uppercase tracking-[0.2em] shadow-lg shadow-red-900/20 transition-all">
+            SAVE_CHANGES
+        </button>
+        <a href="/pages" class="bg-gray-800 hover:bg-gray-700 px-12 py-4 rounded-xl font-black uppercase tracking-[0.2em] transition-all">
+            CANCEL
+        </a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,139 @@
+<!-- Script Name: Template Standard - API Documentation | Version: 1.0.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A professional, responsive wiki HTML template featuring a three-column layout, mobile sidebar, and integrated widgets. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+    <meta property="og:title" content="Wiki Template by Elton Boehnen">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <title>Article Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+    
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">&#x2715;</span>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom:24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+                    <a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-doc-api" container-type="inline-size">
+            <h1 class="emphasis">API Reference</h1>
+            <div class="content-card"><div>Comprehensive documentation for the Switchboard Core API. Use these endpoints to interact with MFDB nodes and automation services.</div></div>
+            
+            <section class="api-endpoint">
+                <div class="endpoint-header">
+                    <span class="method method-get">GET</span>
+                    <span class="path">/api/v1/registry/list</span>
+                </div>
+                <p>Retrieves a list of all active registrations in the 104a manifest.</p>
+                
+                <h4>Parameters</h4>
+                <table class="param-table">
+                    <thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="param-name">node_id</span></td><td>string</td><td>Optional filter by specific Node ID.</td></tr>
+                        <tr><td><span class="param-name">active_only</span></td><td>boolean</td><td>Filter for active registrations only.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Response</h4>
+                <div class="code-block">
+{
+  "status": "success",
+  "data": [
+    { "id": "REG001", "name": "Main_Root", "status": "Active" }
+  ]
+}
+                </div>
+            </section>
+
+            <section class="api-endpoint">
+                <div class="endpoint-header">
+                    <span class="method method-post">POST</span>
+                    <span class="path">/api/v1/jobs/create</span>
+                </div>
+                <p>Creates a new autonomous background job.</p>
+                <div class="code-block">
+curl -X POST https://api.switchboard.io/jobs \
+     -H "Authorization: Bearer <KEY>" \
+     -d '{ "name": "Sync_Repos", "interval": 3600 }'
+                </div>
+            </section>
+            <footer class="page-footer">
+                <span style="font-weight:600;color:#1a1a1a;">Elton Boehnen</span> &nbsp;|&nbsp;
+                <a href="mailto:boehnenelton2024@gmail.com">Email</a> &nbsp;|&nbsp;
+                <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+                <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+            </footer>
+            </div>
+        </main></main>
+
+        <aside class="right-column">
+            <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+    <div class="global-docked-footer">
+        <span style="font-weight:600;">Elton Boehnen</span> &nbsp;|&nbsp;
+        <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+        <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+    </div>
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+    </script>
+</body>
+</html>

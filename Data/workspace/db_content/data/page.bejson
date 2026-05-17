@@ -1,0 +1,85 @@
+{
+  "Format": "BEJSON",
+  "Format_Version": "104",
+  "Format_Creator": "Elton Boehnen",
+  "Parent_Hierarchy": "../104a.mfdb.bejson",
+  "Records_Type": [
+    "Page"
+  ],
+  "Fields": [
+    {
+      "name": "page_uuid",
+      "type": "string"
+    },
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "slug",
+      "type": "string"
+    },
+    {
+      "name": "category_fk",
+      "type": "string"
+    },
+    {
+      "name": "author_fk",
+      "type": "string"
+    },
+    {
+      "name": "page_type",
+      "type": "string"
+    },
+    {
+      "name": "featured_img",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "string"
+    }
+  ],
+  "Values": [
+    [
+      "f3e3cdbb-a561-4f09-82c9-3b9709bbaa74",
+      "BEJSON & MFDB Crash Course",
+      "bejson-&-mfdb-crash-course",
+      "course",
+      "",
+      "article",
+      "",
+      "2026-05-15T07:27:57Z"
+    ],
+    [
+      "3dea1dac-dd7c-4bea-961d-ff22197cc7ac",
+      "NexusCore Python SDK",
+      "nexuscore-python-sdk",
+      "libraries",
+      "",
+      "source-code",
+      "None",
+      "2026-05-15T07:27:57Z"
+    ],
+    [
+      "7b648d66-20d5-4521-b21d-ef064a637353",
+      "Core Shell Automators",
+      "core-shell-automators",
+      "libraries",
+      "",
+      "source-code",
+      "None",
+      "2026-05-15T07:27:57Z"
+    ],
+    [
+      "bba8d591-af95-498f-b1f6-00a5b2a9a265",
+      "NexusJS Frontend Core",
+      "nexusjs-frontend-core",
+      "libraries",
+      "",
+      "source-code",
+      "None",
+      "2026-05-15T07:27:58Z"
+    ]
+  ]
+}

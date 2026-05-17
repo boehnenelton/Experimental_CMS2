@@ -1,0 +1,134 @@
+<!-- ExpCSS RECONSTRUCTION | Universal Skeleton v2.0 -->
+<!-- Relational Meta:  -->
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> | boehnenelton2024</title>
+    
+    <!-- SEO & Meta Tags -->
+    <meta name="description" content="Premium Dark Theme Templates">
+    <meta name="keywords" content="ExpCSS, MFDB, Vanilla JS, Dark Theme, CMS">
+    <meta property="og:title" content=" | boehnenelton2024">
+    <meta property="og:description" content="Premium Dark Theme Templates">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="../assets/og-default.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Core & Components (Standard Library) -->
+    <link rel="stylesheet" href="../css/becss-core.css">
+    <link rel="stylesheet" href="../css/becss-components.css">
+    <link rel="stylesheet" href="../css/becss-headers.css">
+    <link rel="stylesheet" href="../css/becss-sidebars.css">
+    <link rel="stylesheet" href="../css/becss-footers.css">
+    
+    <!-- Tailwind for Grid/Utility (ExpCSS Standard) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root { --primary: #fe3626; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-white min-h-screen flex flex-col">
+
+    <!-- BLOCK: HEADER -->
+    <div id="header-container">
+        <!-- Component: Header Telemetry HUD | Type: Header Fragment | Version: 1.0.0 -->
+<header class="c-header c-header-telemetry">
+    <div class="header-logo">Switch<span class="emphasis">board</span></div>
+    <div class="c-header-telemetry__hud">
+        <div class="c-header-telemetry__item">CPU: <span>12%</span></div>
+        <div class="c-header-telemetry__item">NET: <span>STABLE</span></div>
+        <div class="c-header-telemetry__item">JOBS: <span>4 ACTIVE</span></div>
+    </div>
+</header>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- BLOCK: SIDEBAR (Left Column) -->
+        <aside class="lg:col-span-1">
+            <aside class="c-sidebar c-sidebar-navtree">
+    <div class="c-sidebar__top">
+        <details open><summary>CATEGORIES</summary><div class="c-sidebar-navtree__nested"><a href="../uncategorized/index.html" class="c-sidebar__link">Uncategorized</a>
+<a href="../course/index.html" class="c-sidebar__link">Education</a>
+<a href="../libraries/index.html" class="c-sidebar__link">Open Source</a>
+<a href="../apps/index.html" class="c-sidebar__link">Utilities</a>
+</div></details>
+    </div>
+</aside>
+
+        </aside>
+
+        <!-- BLOCK: MAIN CONTENT -->
+        <main class="lg:col-span-3">
+            <!-- ExpCSS RECONSTRUCTION | Category Feed Skeleton v2.0 -->
+<!-- Dynamic Feed Scaffolding: Supports Blog, News, Products, and Masonry -->
+
+<div class="category-header mb-12">
+    <div class="content-card">
+        <h1 class="text-3xl font-black text-[#fe3626] uppercase tracking-tighter">Uncategorized</h1>
+        <div class="text-gray-400 mt-2 font-mono text-sm">// General posts</div>
+    </div>
+</div>
+
+
+    <div class="c-feed-blog">
+        <div class="blog-feed">
+            
+        </div>
+    </div>
+
+
+
+            
+            
+        </main>
+
+    </div>
+
+    <!-- BLOCK: FOOTER -->
+    <footer id="footer-container">
+        <!-- Component: Footer Status Feed | Type: Footer Fragment | Version: 1.0.0 -->
+<footer class="c-footer c-footer-status">
+    <div class="c-footer-status__label">SYSTEM_LOG:</div>
+    <div class="c-footer-status__ticker">
+        <div class="c-footer-status__item"><div class="c-footer-status__pulse"></div> NODE_MASTER synchronized [0.4ms]</div>
+        <div class="c-footer-status__item"><div class="c-footer-status__pulse"></div> NEW_JOB queued: REPO_AUDIT_Q2</div>
+        <div class="c-footer-status__item"><div class="c-footer-status__pulse"></div> POL_ENFORCER: Integrity verified</div>
+        <div class="c-footer-status__item"><div class="c-footer-status__pulse"></div> HEARTBEAT: 104bpm (Stable)</div>
+    </div>
+</footer>
+    </footer>
+
+    <script>
+        // Universal Sidebar Controller
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.querySelector('.hamburger');
+            const mobileNav = document.querySelector('.mobile-sidebar') || document.querySelector('.c-sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            if (menuBtn && mobileNav) {
+                menuBtn.addEventListener('click', () => {
+                    mobileNav.classList.toggle('open');
+                    if (overlay) overlay.classList.toggle('open');
+                });
+            }
+            
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

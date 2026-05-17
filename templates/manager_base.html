@@ -1,0 +1,39 @@
+<!-- RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4 -->
+<!-- VERSION: v1.0.0-alpha -->
+<!-- CREDITS: Elton Boehnen (github.com/boehnenelton) -->
+<!-- DATE: 2026-04-25 -->
+<!-- FILE: manager_base.html -->
+
+<!-- RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4 -->
+<!-- VERSION: v1.0.0-alpha -->
+<!-- CREDITS: Elton Boehnen (github.com/boehnenelton) -->
+<!-- DATE: 2026-04-25 -->
+<!-- FILE: manager_base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experimental CSS Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background: #0a0a0a; color: white; font-family: sans-serif; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+    <aside class="w-64 bg-[#111] border-r border-gray-800 p-6 flex flex-col gap-4">
+        <h1 class="text-xl font-bold text-red-500 mb-8">SITE MANAGER</h1>
+        <nav class="flex flex-col gap-2">
+            <a href="/" class="p-3 hover:bg-gray-800 rounded flex items-center gap-3"><i data-lucide="settings"></i> General Config</a>
+            <a href="/preview" class="p-3 hover:bg-gray-800 rounded flex items-center gap-3"><i data-lucide="eye"></i> Live Preview</a>
+            <hr class="border-gray-800 my-4">
+            <button onclick="window.location.href='/build_trigger'" class="p-3 bg-red-600 hover:bg-red-700 rounded text-center font-bold">🚀 RUN BUILD</button>
+        </nav>
+    </aside>
+    <main class="flex-grow p-12">
+        {% block content %}{% endblock %}
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- ExpCSS RECONSTRUCTION | Video Skeleton v2.0 -->
+<div class="c-video-player" container-type="inline-size">
+    <div class="video-wrapper bg-black rounded-xl overflow-hidden border border-gray-800 shadow-2xl">
+        <iframe class="w-full aspect-video" src="{{ video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="video-title-bar mt-6">
+        <h1 class="text-3xl font-black mb-2">{{ title }}</h1>
+        <span class="video-meta text-gray-500 text-xs font-mono uppercase">{{ category_name }} &bull; {{ created_at }}</span>
+    </div>
+
+    <div class="content-card mt-6">
+        <div class="prose prose-invert max-w-none text-gray-300">
+            {{ html_body | safe }}
+        </div>
+    </div>
+</div>

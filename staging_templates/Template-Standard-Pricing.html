@@ -1,0 +1,232 @@
+<!-- Script Name: Template Standard - Pricing Table | Version: 1.0.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A professional, responsive pricing table HTML template featuring a three-column layout, three-tier plan comparison, feature rows, and billing toggle. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <meta name="keywords" content="pricing table template, HTML template, responsive design, plan comparison, billing tiers, Elton Boehnen, frontend">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+
+    <meta property="og:title" content="Pricing Table Template by Elton Boehnen">
+    <meta property="og:description" content="A professional, responsive pricing table HTML template with three-tier plan comparison, feature rows, and billing toggle.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <meta property="og:site_name" content="Elton Boehnen Portfolio">
+
+    <title>Pricing Table Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">✕</span>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom: 24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a><a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-pricing" container-type="inline-size">
+            <h1 class="emphasis">Pricing</h1>
+
+            <div class="content-card">
+                <div>Choose a plan that fits your needs. All plans include a 14-day free trial — no credit card required.</div>
+            </div>
+
+            <div class="pricing-billing-toggle">
+                <span class="billing-label billing-label--active">Monthly</span>
+                <div class="billing-switch">
+                    <span class="billing-switch-opt active">Monthly</span>
+                    <span class="billing-switch-opt">Annual</span>
+                </div>
+                <span class="billing-label">Annual &nbsp;<span class="pricing-save-badge">Save 20%</span></span>
+            </div>
+
+            <div class="pricing-grid">
+
+                <div class="pricing-card">
+                    <div class="pricing-plan-name">Free</div>
+                    <div class="pricing-price-row">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount">0</span>
+                        <span class="pricing-period">/mo</span>
+                    </div>
+                    <p class="pricing-desc">For individuals getting started. No credit card needed.</p>
+                    <a href="#" class="pricing-cta">Get Started Free</a>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Feature one included</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Feature two included</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Up to 3 projects</li>
+                        <li class="pricing-feature pricing-feature--dim"><span class="pricing-feature-icon">✗</span> Advanced feature A</li>
+                        <li class="pricing-feature pricing-feature--dim"><span class="pricing-feature-icon">✗</span> Priority support</li>
+                    </ul>
+                </div>
+
+                <div class="pricing-card pricing-card--featured">
+                    <div class="pricing-popular-badge">Most Popular</div>
+                    <div class="pricing-plan-name">Pro</div>
+                    <div class="pricing-price-row">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount">19</span>
+                        <span class="pricing-period">/mo</span>
+                    </div>
+                    <p class="pricing-desc">For professionals who need more power and flexibility.</p>
+                    <a href="#" class="pricing-cta pricing-cta--primary">Start Pro Trial</a>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Everything in Free</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Unlimited projects</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Advanced feature A</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Advanced feature B</li>
+                        <li class="pricing-feature pricing-feature--dim"><span class="pricing-feature-icon">✗</span> Priority support</li>
+                    </ul>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-plan-name">Enterprise</div>
+                    <div class="pricing-price-row">
+                        <span class="pricing-currency">$</span>
+                        <span class="pricing-amount">79</span>
+                        <span class="pricing-period">/mo</span>
+                    </div>
+                    <p class="pricing-desc">For teams and organizations that need full control.</p>
+                    <a href="#" class="pricing-cta">Contact Sales</a>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Everything in Pro</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Advanced feature C</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> SSO &amp; admin controls</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> SLA guarantee</li>
+                        <li class="pricing-feature"><span class="pricing-feature-icon">✓</span> Priority support</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <p class="pricing-faq-note">All prices in USD. <a href="#">View full feature comparison</a> or <a href="#">read the FAQ</a>.</p>
+
+            <table class="pricing-compare-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%">Feature</th>
+                        <th>Free</th>
+                        <th>Pro</th>
+                        <th>Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Feature One</td>
+                        <td><span class="pricing-check">✓</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Feature Two</td>
+                        <td>Up to 3</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>Advanced Feature A</td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Advanced Feature B</td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Priority Support</td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>SLA Guarantee</td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-dash">—</span></td>
+                        <td><span class="pricing-check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <footer class="page-footer">
+                <span style="font-weight: 600; color: #1a1a1a;">Author Name</span> &nbsp;|&nbsp;
+                <a href="#">Email Link</a> &nbsp;|&nbsp;
+                <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+                <a href="#">Website Link</a>
+            </footer>
+            </div>
+        </main>
+
+        <aside class="right-column">
+            <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+
+    <div class="global-docked-footer">
+        <span style="font-weight: 600;">Author Name</span> &nbsp;|&nbsp;
+        <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+        <a href="#">Website Link</a>
+    </div>
+
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html>

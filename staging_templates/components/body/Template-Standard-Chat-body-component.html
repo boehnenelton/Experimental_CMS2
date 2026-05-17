@@ -1,0 +1,399 @@
+<!-- Component Name: Template Standard - Chat | Type: Body Component | Version: 1.0.24 -->
+
+
+<div class="c-chat" container-type="inline-size">
+    <div class="content-card" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px;">
+                <span id="status-dot" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #666;"></span>
+                <div id="app-status-indicator" style="font-weight: 500; font-size: 0.95rem;">Idle: Default key loaded</div>
+            </div>
+
+            <div class="card-feed-section" id="gemini-chat-client">
+                <div class="content-card" style="margin-bottom: 0; display: flex; flex-direction: column; height: 500px; position: relative; overflow: hidden;">
+                    <h3 class="card-feed-title">Gemini Chat</h3>
+                    <div id="chat-messages" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; padding-right: 8px;">
+                        <div style="align-self: flex-start; background-color: #f0f0f0; padding: 12px; border-radius: 8px; max-width: 85%;">
+                            Hello! I am your Gemini assistant. How can I help you today?
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; align-items: stretch;">
+                        <textarea id="chat-input" placeholder="Type your message..." style="height: 64px; flex-grow: 1; padding: 8px 12px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 1rem; font-family: 'Inter', sans-serif; resize: none; line-height: 23px; box-sizing: border-box;"></textarea>
+                        
+                        <div style="display: flex; flex-direction: column; height: 64px; width: 80px;">
+                            <button id="open-chat-settings" style="height: 32px; padding: 0; background: #f0f0f0; border: 1px solid #e5e5e5; border-bottom: none; border-radius: 6px 6px 0 0; color: #666; cursor: pointer; font-size: 0.8rem; box-sizing: border-box; font-family: 'Inter', sans-serif;">⚙️ Set</button>
+                            <button id="chat-submit" style="height: 32px; padding: 0; background-color: #de2626; color: #fff; border: none; border-radius: 0 0 6px 6px; font-weight: 600; cursor: pointer; box-sizing: border-box; font-family: 'Inter', sans-serif;">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Settings Overlay -->
+                    <div id="chat-settings-overlay" class="chat-settings-overlay">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2 style="margin: 0;">Chat Settings</h2>
+                            <button id="close-chat-settings" class="settings-close-btn" style="align-self: center;">✕</button>
+                        </div>
+                        
+                        <!-- AI Configuration -->
+                        <details class="setting-group" open>
+                            <summary>AI Configuration</summary>
+                            <div style="padding-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                                <!-- Left Column: Key Template -->
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;">Key Template</label>
+                                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;">
+                                        <input type="file" id="bejson-import" accept=".bejson,.json" style="display: none;">
+                                        <button id="trigger-import" style="padding: 6px 12px; background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: 'Inter', sans-serif; white-space: nowrap; flex: 1;">Import</button>
+                                        <button id="export-bejson-template" style="padding: 6px 12px; background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: 'Inter', sans-serif; white-space: nowrap; flex: 1;">Export</button>
+                                    </div>
+                                    <div id="key-import-status" style="margin-top: 8px; font-size: 0.85rem; color: #666;"></div>
+                                </div>
+                                
+                                <!-- Right Column: Model Selection -->
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;">Model Selection</label>
+                                    <!-- data-search corresponds to the model's google_search_enabled parameter in registry -->
+                                    <select id="model-select" style="width: 100%; padding: 6px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.9rem; background-color: #fff; cursor: pointer;">
+                                        <option value="gemini-3.1-pro-preview" data-search="true" selected>Gemini 3.1 Pro (Preview)</option>
+                                        <option value="gemini-2.5-pro" data-search="true">Gemini 2.5 Pro</option>
+                                        <option value="gemini-3-flash-preview" data-search="true">Gemini 3 Flash (Preview)</option>
+                                        <option value="gemini-3.1-flash-lite-preview" data-search="true">Gemini 3.1 Flash-Lite (Preview)</option>
+                                        <option value="gemini-2.5-flash" data-search="false">Gemini 2.5 Flash</option>
+                                        <option value="gemini-3-pro-image-preview" data-search="false">Gemini 3 Pro Image (Preview)</option>
+                                        <option value="gemini-3.1-flash-image-preview" data-search="false">Gemini 3.1 Flash Image (Preview)</option>
+                                        <option value="gemini-3.1-flash-tts-preview" data-search="false">Gemini 3.1 Flash TTS (Preview)</option>
+                                        <option value="gemini-3.1-flash-live-preview" data-search="true">Gemini 3.1 Flash Live (Preview)</option>
+                                        <option value="gemma-4-31b-it" data-search="false">Gemma 4 31B IT</option>
+                                        <option value="gemma-4-26b-a4b-it" data-search="false">Gemma 4 26B MoE IT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- Profile Settings -->
+                        <details class="setting-group">
+                            <summary>Profile Settings</summary>
+                            <div style="padding-top: 12px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                                    <div>
+                                        <label style="display: block; font-size: 0.85rem; margin-bottom: 4px;">Name</label>
+                                        <input type="text" id="prof-name" style="width: 100%; padding: 6px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 0.85rem; margin-bottom: 4px;">Creativity (Temp)</label>
+                                        <input type="number" id="prof-temp" step="0.1" min="0" max="2" style="width: 100%; padding: 6px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 0.85rem; margin-bottom: 4px;">Max Tokens</label>
+                                        <input type="number" id="prof-tokens" style="width: 100%; padding: 6px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: 'Inter', sans-serif;">
+                                    </div>
+                                    <div style="display: flex; align-items: flex-end; padding-bottom: 6px;">
+                                        <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; margin: 0;">
+                                            <input type="checkbox" id="prof-search" style="margin: 0; width: 16px; height: 16px;"> 
+                                            Google Search
+                                        </label>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 16px;">
+                                    <label style="display: block; font-size: 0.85rem; margin-bottom: 4px;">System Instruction</label>
+                                    <textarea id="prof-sys" rows="2" style="width: 100%; padding: 6px; border: 1px solid #e5e5e5; border-radius: 4px; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                                </div>
+                                
+                                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;">
+                                    <input type="file" id="profile-import-file" accept=".bejson,.json" style="display: none;">
+                                    <button id="btn-import-prof" style="padding: 6px 12px; background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: 'Inter', sans-serif; white-space: nowrap; flex: 1;">Import</button>
+                                    <button id="btn-export-prof" style="padding: 6px 12px; background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: 'Inter', sans-serif; white-space: nowrap; flex: 1;">Export</button>
+                                    <button id="btn-save-prof" style="padding: 6px 12px; background-color: #de2626; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 500; white-space: nowrap; flex: 1;">Save</button>
+                                </div>
+                                <div id="prof-status" style="margin-top: 8px; font-size: 0.85rem; color: #666;">Active Profile: Default</div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Core AI States
+                let API_KEY = "";
+                let MODEL = "gemini-3.1-pro-preview";
+                const getEndpoint = () => `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
+
+                // Default Profile State (Indices align with BEJSON 104 Fields)
+                // 1: Name, 4: SystemInstruction, 9: MaxTokens, 10: Creativity, 16: GoogleSearch_Enabled
+                let activeProfileValues = [
+                    "AI_Profile", "Gemini_Assistant", "Tutor", "Short description of the AI persona.",
+                    "System instructions here...", [], "Emoji", "", "🤖", 65536, 0.2, ["Professional", "Helpful"],
+                    "Formal", "Normal", false, 0.0, true, true, true, "complete", ["python", "javascript"], true, true
+                ];
+
+                const chatMessages = document.getElementById("chat-messages");
+                const chatInput = document.getElementById("chat-input");
+                const chatSubmit = document.getElementById("chat-submit");
+                const appStatusIndicator = document.getElementById("app-status-indicator");
+                const statusDot = document.getElementById("status-dot");
+
+                function updateStatus(message, color) {
+                    if(appStatusIndicator) appStatusIndicator.textContent = message;
+                    if(statusDot) statusDot.style.backgroundColor = color;
+                }
+
+                // AI Configuration UI bindings
+                const openSettingsBtn = document.getElementById("open-chat-settings");
+                const closeSettingsBtn = document.getElementById("close-chat-settings");
+                const settingsOverlay = document.getElementById("chat-settings-overlay");
+                const modelSelect = document.getElementById("model-select");
+                const profSearch = document.getElementById('prof-search');
+
+                modelSelect.addEventListener("change", (e) => {
+                    MODEL = e.target.value;
+                    const selectedOption = e.target.options[e.target.selectedIndex];
+                    const searchSupported = selectedOption.getAttribute('data-search') === 'true';
+                    
+                    // Disable and uncheck search if the selected model doesn't support it
+                    profSearch.disabled = !searchSupported;
+                    if (!searchSupported && profSearch.checked) {
+                        profSearch.checked = false;
+                        activeProfileValues[16] = false;
+                    }
+                });
+
+                openSettingsBtn.addEventListener("click", () => settingsOverlay.classList.add("open"));
+                closeSettingsBtn.addEventListener("click", () => settingsOverlay.classList.remove("open"));
+
+                // ---- Keys Import / Export ----
+                const bejsonImport = document.getElementById("bejson-import");
+                const triggerImportBtn = document.getElementById("trigger-import");
+                const keyImportStatus = document.getElementById("key-import-status");
+                const exportTemplateBtn = document.getElementById("export-bejson-template");
+
+                triggerImportBtn.addEventListener("click", () => bejsonImport.click());
+
+                exportTemplateBtn.addEventListener("click", () => {
+                    const templateData = {
+                        "Format": "BEJSON", "Format_Version": "104a", "Format_Creator": "Elton Boehnen",
+                        "Schema_Name": "ApiKeyRegistry", "Records_Type": ["ApiKey"],
+                        "Fields": [{"name": "key_slot", "type": "integer"}, {"name": "key", "type": "string"}],
+                        "Values": [[1, "API_KEY_SLOT_1"], [2, "API_KEY_SLOT_2"]]
+                    };
+                    downloadJSON(templateData, "gemini_keys_template.bejson");
+                });
+
+                bejsonImport.addEventListener("change", (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            if (data.Format === "BEJSON" && data.Records_Type && Array.isArray(data.Records_Type) && data.Records_Type.includes("ApiKey")) {
+                                const keys = data.Values.map(row => row[1]);
+                                keyImportStatus.textContent = `Success: ${keys.length} keys loaded.`;
+                                keyImportStatus.style.color = "green";
+                                if (keys.length > 0) API_KEY = keys[0]; 
+                                updateStatus(`Idle: ${keys.length} keys loaded`, "green");
+                            } else {
+                                throw new Error("File is valid JSON but not a valid BEJSON ApiKey document.");
+                            }
+                        } catch (err) {
+                            keyImportStatus.textContent = "Error: " + err.message;
+                            keyImportStatus.style.color = "red";
+                            updateStatus("Error: Key import failed", "red");
+                        } finally { e.target.value = ""; }
+                    };
+                    reader.readAsText(file);
+                });
+
+                // ---- Profile Editing, Import / Export ----
+                const profName = document.getElementById('prof-name');
+                const profTemp = document.getElementById('prof-temp');
+                const profTokens = document.getElementById('prof-tokens');
+                const profSys = document.getElementById('prof-sys');
+                const btnImportProf = document.getElementById('btn-import-prof');
+                const btnExportProf = document.getElementById('btn-export-prof');
+                const btnSaveProf = document.getElementById('btn-save-prof');
+                const fileImportProf = document.getElementById('profile-import-file');
+                const profStatus = document.getElementById('prof-status');
+
+                // Initialize Profile UI
+                function syncProfileToUI() {
+                    profName.value = activeProfileValues[1];
+                    profSys.value = activeProfileValues[4];
+                    profTokens.value = activeProfileValues[9];
+                    profTemp.value = activeProfileValues[10];
+                    profSearch.checked = activeProfileValues[16] === true;
+                    
+                    // Verify if current model supports search to override the UI state
+                    const searchSupported = modelSelect.options[modelSelect.selectedIndex].getAttribute('data-search') === 'true';
+                    profSearch.disabled = !searchSupported;
+                    if (!searchSupported) {
+                        profSearch.checked = false;
+                        activeProfileValues[16] = false;
+                    }
+                }
+                syncProfileToUI();
+
+                // Live Update Profile State from UI
+                [profName, profSys, profTokens, profTemp, profSearch].forEach(el => {
+                    el.addEventListener('input', (e) => {
+                        if (el.id === 'prof-name') activeProfileValues[1] = e.target.value;
+                        if (el.id === 'prof-sys') activeProfileValues[4] = e.target.value;
+                        if (el.id === 'prof-tokens') activeProfileValues[9] = parseInt(e.target.value, 10) || 65536;
+                        if (el.id === 'prof-temp') activeProfileValues[10] = parseFloat(e.target.value) || 0;
+                        if (el.id === 'prof-search') activeProfileValues[16] = e.target.checked;
+                    });
+                });
+
+                // Profile Save
+                btnSaveProf.addEventListener("click", () => {
+                    profStatus.textContent = `Success: Profile '${activeProfileValues[1]}' saved to active memory.`;
+                    profStatus.style.color = "green";
+                    updateStatus(`Idle: Profile '${activeProfileValues[1]}' active`, "green");
+                });
+
+                // Profile Export
+                btnExportProf.addEventListener("click", () => {
+                    const profileData = {
+                        "Format": "BEJSON", "Format_Version": "104", "Format_Creator": "Elton Boehnen",
+                        "Records_Type": ["AI_Profile"], "Parent_Hierarchy": "/LLM_Configuration",
+                        "Fields": [
+                            {"name": "Record_Type_Parent", "type": "string"}, {"name": "Name", "type": "string"},
+                            {"name": "Archetype", "type": "string"}, {"name": "Persona", "type": "string"},
+                            {"name": "SystemInstruction", "type": "string"}, {"name": "ForbiddenTopics", "type": "array"},
+                            {"name": "Avatar_Type", "type": "string"}, {"name": "Avatar_sourceUrl", "type": "string"},
+                            {"name": "Avatar_Data", "type": "string"}, {"name": "MaxResponseTokens", "type": "integer"},
+                            {"name": "Creativity", "type": "number"}, {"name": "Tone", "type": "array"},
+                            {"name": "Formality", "type": "string"}, {"name": "Verbosity", "type": "string"},
+                            {"name": "EmotionalExpression_Enabled", "type": "boolean"}, {"name": "EmotionalExpression_Intensity", "type": "number"},
+                            {"name": "GoogleSearch_Enabled", "type": "boolean"}, {"name": "CodeInterpreter_Enabled", "type": "boolean"},
+                            {"name": "EphemeralMemory", "type": "boolean"}, {"name": "CodeParsing_Mode", "type": "string"},
+                            {"name": "CodeParsing_Languages", "type": "array"}, {"name": "CodeParsing_StructureValidation", "type": "boolean"},
+                            {"name": "CodeParsing_VersionControl", "type": "boolean"}
+                        ],
+                        "Values": [ activeProfileValues ]
+                    };
+                    downloadJSON(profileData, "gemini_standard_profile.bejson");
+                });
+
+                // Profile Import
+                btnImportProf.addEventListener("click", () => fileImportProf.click());
+                fileImportProf.addEventListener("change", (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            if (data.Format === "BEJSON" && data.Records_Type && data.Records_Type.includes("AI_Profile")) {
+                                if (data.Values && data.Values.length > 0) {
+                                    activeProfileValues = data.Values[0];
+                                    syncProfileToUI();
+                                    profStatus.textContent = `Success: Profile '${activeProfileValues[1]}' loaded.`;
+                                    profStatus.style.color = "green";
+                                }
+                            } else {
+                                throw new Error("Not a valid BEJSON AI_Profile document.");
+                            }
+                        } catch (err) {
+                            profStatus.textContent = "Error: " + err.message;
+                            profStatus.style.color = "red";
+                        } finally { e.target.value = ""; }
+                    };
+                    reader.readAsText(file);
+                });
+
+                // Utility JSON Downloader
+                function downloadJSON(data, filename) {
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+
+                // ---- Chat Logic ----
+                let conversationHistory = [];
+
+                function appendMessage(text, isUser) {
+                    const msgDiv = document.createElement("div");
+                    msgDiv.style.alignSelf = isUser ? "flex-end" : "flex-start";
+                    msgDiv.style.backgroundColor = isUser ? "#de2626" : "#f0f0f0";
+                    msgDiv.style.color = isUser ? "#fff" : "#1a1a1a";
+                    msgDiv.style.padding = "12px";
+                    msgDiv.style.borderRadius = "8px";
+                    msgDiv.style.maxWidth = "85%";
+                    msgDiv.style.lineHeight = "1.5";
+                    msgDiv.innerHTML = text.replace(/\n/g, "<br>");
+                    chatMessages.appendChild(msgDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+
+                async function sendMessage() {
+                    const text = chatInput.value.trim();
+                    if (!text) return;
+
+                    appendMessage(text, true);
+                    chatInput.value = "";
+                    chatInput.disabled = true;
+                    chatSubmit.disabled = true;
+                    updateStatus("Sending message...", "#eab308"); // Yellow
+
+                    conversationHistory.push({ role: "user", parts: [{ text }] });
+
+                    const payload = {
+                        contents: conversationHistory,
+                        generationConfig: {
+                            temperature: activeProfileValues[10], // Creativity
+                            maxOutputTokens: activeProfileValues[9] // MaxTokens
+                        }
+                    };
+
+                    // Inject System Instruction if set
+                    if (activeProfileValues[4] && activeProfileValues[4].trim() !== "") {
+                        payload.systemInstruction = { parts: [{ text: activeProfileValues[4] }] };
+                    }
+
+                    // Inject Google Search Tool if enabled
+                    if (activeProfileValues[16] === true) {
+                        payload.tools = [{ "google_search": {} }];
+                    }
+
+                    try {
+                        const response = await fetch(getEndpoint(), {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        updateStatus("Waiting for reply...", "#3b82f6"); // Blue
+                        const data = await response.json();
+
+                        if (data.candidates && data.candidates[0].content.parts.length > 0) {
+                            const aiText = data.candidates[0].content.parts[0].text;
+                            appendMessage(aiText, false);
+                            conversationHistory.push({ role: "model", parts: [{ text: aiText }] });
+                            updateStatus("Idle: Ready", "green");
+                        } else {
+                            throw new Error("No valid response from API");
+                        }
+                    } catch (error) {
+                        appendMessage("Error: " + error.message, false);
+                        conversationHistory.pop();
+                        updateStatus("Error processing message", "red");
+                    } finally {
+                        chatInput.disabled = false;
+                        chatSubmit.disabled = false;
+                        chatInput.focus();
+                    }
+                }
+
+                chatSubmit.addEventListener("click", sendMessage);
+                chatInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            </script>
+</div>

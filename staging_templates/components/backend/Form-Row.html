@@ -1,0 +1,16 @@
+<!-- Component: Admin Form Row | Type: Backend Fragment | Version: 1.0.0 -->
+<div class="mb-6">
+    <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2 tracking-widest">{{ label }}</label>
+    {% if type == 'textarea' %}
+    <textarea name="{{ name }}" placeholder="{{ placeholder }}" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors font-mono text-sm">{{ value or '' }}</textarea>
+    {% elif type == 'select' %}
+    <select name="{{ name }}" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors font-bold text-white">
+        {% for opt in options %}
+        <option value="{{ opt.value }}" {% if opt.value == value %}selected{% endif %}>{{ opt.label }}</option>
+        {% endfor %}
+    </select>
+    {% else %}
+    <input type="{{ type or 'text' }}" name="{{ name }}" value="{{ value or '' }}" placeholder="{{ placeholder }}" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors font-bold text-white" {% if required %}required{% endif %}>
+    {% endif %}
+    {% if help %}<p class="text-[9px] text-gray-600 mt-2 font-mono uppercase">{{ help }}</p>{% endif %}
+</div>

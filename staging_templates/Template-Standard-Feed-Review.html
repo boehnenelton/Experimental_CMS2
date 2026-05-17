@@ -1,0 +1,206 @@
+<!-- Script Name: Template Standard - Review Feed | Version: 1.0.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A professional, responsive review feed HTML template featuring a three-column layout, star ratings, summary score card, paginated user reviews. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <meta name="keywords" content="review feed template, HTML template, responsive design, star ratings, user reviews, Elton Boehnen, frontend">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+
+    <meta property="og:title" content="Review Feed Template by Elton Boehnen">
+    <meta property="og:description" content="A professional, responsive review feed HTML template with star rating summary, paginated user reviews, and filter controls.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <meta property="og:site_name" content="Elton Boehnen Portfolio">
+
+    <title>Review Feed Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">✕</span>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom: 24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a><a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-feed-review" container-type="inline-size">
+            <h1 class="emphasis">Reviews</h1>
+
+            <div class="review-summary">
+                <div class="review-score-block">
+                    <div class="review-score-big">4.3</div>
+                    <div class="review-stars-row">★★★★☆</div>
+                    <div class="review-score-count">Based on 214 reviews</div>
+                </div>
+                <div class="review-bars">
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">5 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width:58%"></div></div>
+                        <span class="review-bar-pct">58%</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">4 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width:24%"></div></div>
+                        <span class="review-bar-pct">24%</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">3 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width:10%"></div></div>
+                        <span class="review-bar-pct">10%</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">2 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width:5%"></div></div>
+                        <span class="review-bar-pct">5%</span>
+                    </div>
+                    <div class="review-bar-row">
+                        <span class="review-bar-label">1 ★</span>
+                        <div class="review-bar-track"><div class="review-bar-fill" style="width:3%"></div></div>
+                        <span class="review-bar-pct">3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-controls">
+                <span class="review-filter-btn active">All Stars</span>
+                <span class="review-filter-btn">5 ★</span>
+                <span class="review-filter-btn">4 ★</span>
+                <span class="review-filter-btn">3 ★ &amp; Below</span>
+            </div>
+
+            <div class="review-feed">
+
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="review-avatar">JD</div>
+                        <div class="review-author-block">
+                            <p class="review-author-name">Reviewer Display Name</p>
+                            <span class="review-author-meta">Verified Purchase &nbsp;·&nbsp; May 7, 2025</span>
+                        </div>
+                        <div class="review-item-stars">★★★★★</div>
+                    </div>
+                    <p class="review-item-title">Review Headline or Summary Title</p>
+                    <p class="review-item-body">The full text of the reviewer's comments. This could be one to several sentences describing their experience with the product, service, or content. It covers what they liked, what worked well, and any standout features they noticed.</p>
+                    <div class="review-helpful-row">Was this helpful? <a href="#">Yes (12)</a> &nbsp;·&nbsp; <a href="#">No (1)</a></div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="review-avatar">SA</div>
+                        <div class="review-author-block">
+                            <p class="review-author-name">Second Reviewer Name</p>
+                            <span class="review-author-meta">Verified Purchase &nbsp;·&nbsp; May 3, 2025</span>
+                        </div>
+                        <div class="review-item-stars">★★★★☆</div>
+                    </div>
+                    <p class="review-item-title">Another Review Headline — Four Stars</p>
+                    <p class="review-item-body">The full text of this review. This reviewer gives four stars and provides balanced feedback — mentioning positives as well as a minor point that kept them from giving the full five stars.</p>
+                    <div class="review-helpful-row">Was this helpful? <a href="#">Yes (7)</a> &nbsp;·&nbsp; <a href="#">No (0)</a></div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-item-header">
+                        <div class="review-avatar">MK</div>
+                        <div class="review-author-block">
+                            <p class="review-author-name">Third Reviewer Name</p>
+                            <span class="review-author-meta">Apr 28, 2025</span>
+                        </div>
+                        <div class="review-item-stars">★★★☆☆</div>
+                    </div>
+                    <p class="review-item-title">Three Stars — Good But Has Room to Improve</p>
+                    <p class="review-item-body">This reviewer leaves a mixed assessment. They mention specific things that worked for them and areas they felt could be better. The tone is constructive and the feedback is specific.</p>
+                    <div class="review-helpful-row">Was this helpful? <a href="#">Yes (3)</a> &nbsp;·&nbsp; <a href="#">No (2)</a></div>
+                </div>
+
+            </div>
+
+            <div class="review-pagination">
+                <div class="review-page-btn">&#8249;</div>
+                <div class="review-page-btn active">1</div>
+                <div class="review-page-btn">2</div>
+                <div class="review-page-btn">3</div>
+                <div class="review-page-btn">4</div>
+                <div class="review-page-btn">&#8250;</div>
+            </div>
+
+            <footer class="page-footer">
+                <span style="font-weight: 600; color: #1a1a1a;">Author Name</span> &nbsp;|&nbsp;
+                <a href="#">Email Link</a> &nbsp;|&nbsp;
+                <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+                <a href="#">Website Link</a>
+            </footer>
+            </div>
+        </main>
+
+        <aside class="right-column">
+            <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+
+    <div class="global-docked-footer">
+        <span style="font-weight: 600;">Author Name</span> &nbsp;|&nbsp;
+        <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+        <a href="#">Website Link</a>
+    </div>
+
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Template Stitcher</title>
+    <link rel="stylesheet" href="/static/becss-core.css">
+    <style>
+        body { background: #f4f4f9; font-family: 'Inter', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        .stitcher-card { background: white; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; box-sizing: border-box; min-height: 100vh; }
+        h1 { font-size: 1.4rem; margin: 0 0 20px 0; color: #1a1a1a; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 20px; 
+        }
+        
+        .form-group { margin-bottom: 0; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem; color: #555; }
+        select, input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box; background: #fafafa; }
+        
+        .button-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        button { flex: 1; min-width: 140px; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: #007bff; font-size: 0.9rem; }
+        button:hover { background: #0056b3; transform: translateY(-1px); }
+        #exportBtn { background: #28a745; }
+        #exportBtn:hover { background: #218838; }
+        #clearBtn { background: #6c757d; }
+        #clearBtn:hover { background: #5a6268; }
+        
+        .preview-area { margin-top: 25px; border-top: 1px solid #ddd; padding-top: 15px; }
+        .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .preview-header h3 { margin: 0; font-size: 1.1rem; color: #333; }
+        
+        iframe { width: 100%; height: 80vh; border: 1px solid #ccc; border-radius: 8px; background: white; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        
+        #statusMessage { margin-bottom: 15px; padding: 12px; border-radius: 6px; font-size: 0.9rem; font-weight: 500; display: none; }
+    </style>
+</head>
+<body>
+    <div class="stitcher-card">
+        <h1>HTML Template Stitcher</h1>
+        
+        <div id="statusMessage"></div>
+
+        <form id="stitchForm">
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label for="page_name">Page Name</label>
+                    <input type="text" id="page_name" name="page_name" placeholder="My Awesome Page" value="{{ last_config.page_name or '' }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="header">Header</label>
+                    <select name="header" id="header">
+                        <option value="blank" {% if last_config.header == 'blank' %}selected{% endif %}>-- Blank --</option>
+                        {% for h in headers %}
+                        <option value="{{ h.file }}" {% if last_config.header == h.file %}selected{% endif %}>{{ h.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sidebar">Sidebar</label>
+                    <select name="sidebar" id="sidebar">
+                        <option value="blank" {% if last_config.sidebar == 'blank' %}selected{% endif %}>-- Blank --</option>
+                        {% for s in sidebars %}
+                        <option value="{{ s.file }}" {% if last_config.sidebar == s.file %}selected{% endif %}>{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <select name="body" id="body">
+                        <option value="blank" {% if last_config.body == 'blank' %}selected{% endif %}>-- Blank --</option>
+                        {% for b in bodies %}
+                        <option value="{{ b.file }}" {% if last_config.body == b.file %}selected{% endif %}>{{ b.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="footer">Footer</label>
+                    <select name="footer" id="footer">
+                        <option value="blank" {% if last_config.footer == 'blank' %}selected{% endif %}>-- Blank --</option>
+                        {% for f in footers %}
+                        <option value="{{ f.file }}" {% if last_config.footer == f.file %}selected{% endif %}>{{ f.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit">Stitch & Preview</button>
+                <button type="button" id="exportBtn">Export to Builds</button>
+                <button type="button" id="clearBtn">Clear Preview</button>
+            </div>
+        </form>
+
+        <div class="preview-area" id="previewArea" style="display:none;">
+            <div class="preview-header">
+                <h3>Live Preview</h3>
+                <span id="previewStatus" style="font-size: 0.8rem; color: #666; font-family: monospace;"></span>
+            </div>
+            <iframe id="previewFrame"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('stitchForm');
+        const exportBtn = document.getElementById('exportBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const previewArea = document.getElementById('previewArea');
+        const previewFrame = document.getElementById('previewFrame');
+        const statusMessage = document.getElementById('statusMessage');
+        const previewStatus = document.getElementById('previewStatus');
+
+        function showStatus(msg, isError = false) {
+            statusMessage.style.display = 'block';
+            statusMessage.style.background = isError ? '#f8d7da' : '#d4edda';
+            statusMessage.style.color = isError ? '#721c24' : '#155724';
+            statusMessage.textContent = msg;
+            setTimeout(() => { statusMessage.style.display = 'none'; }, 5000);
+        }
+
+        function clearPreview() {
+            previewFrame.srcdoc = '';
+            previewArea.style.display = 'none';
+            previewStatus.textContent = '';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            previewStatus.textContent = 'Stitching...';
+            
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('/stitch', {
+                    method: 'POST',
+                    body: formData
+                });
+                const html = await response.text();
+                
+                // Force reset iframe by clearing srcdoc first
+                previewFrame.srcdoc = '';
+                
+                // Use a small timeout to ensure the clear is processed
+                setTimeout(() => {
+                    previewFrame.srcdoc = html;
+                    previewArea.style.display = 'block';
+                    previewStatus.textContent = 'Updated: ' + new Date().toLocaleTimeString();
+                }, 50);
+
+            } catch (err) {
+                showStatus('Preview failed: ' + err.message, true);
+                previewStatus.textContent = 'Error';
+            }
+        });
+
+        exportBtn.addEventListener('click', async () => {
+            const formData = new FormData(form);
+            const response = await fetch('/export', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                showStatus(`Successfully exported to builds/${result.filename}`);
+            } else {
+                showStatus(`Export failed: ${result.error}`, true);
+            }
+        });
+
+        clearBtn.addEventListener('click', clearPreview);
+    </script>
+</body>
+</html>

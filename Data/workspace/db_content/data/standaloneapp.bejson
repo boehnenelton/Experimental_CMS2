@@ -1,0 +1,55 @@
+{
+  "Format": "BEJSON",
+  "Format_Version": "104",
+  "Format_Creator": "Elton Boehnen",
+  "Parent_Hierarchy": "../104a.mfdb.bejson",
+  "Records_Type": [
+    "StandaloneApp"
+  ],
+  "Fields": [
+    {
+      "name": "app_uuid",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "slug",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "category_fk",
+      "type": "string"
+    },
+    {
+      "name": "featured_img",
+      "type": "string"
+    },
+    {
+      "name": "entry_file",
+      "type": "string"
+    },
+    {
+      "name": "created_at",
+      "type": "string"
+    }
+  ],
+  "Values": [
+    [
+      "90b153c0-7cc2-45ce-8a96-8d54ee34daff",
+      "NexusDraw",
+      "nexusdraw",
+      "A minimalist high-contrast drawing utility restricted to black, white, and red.",
+      "apps",
+      "",
+      "index.html",
+      "2026-05-15T07:27:58Z"
+    ]
+  ]
+}

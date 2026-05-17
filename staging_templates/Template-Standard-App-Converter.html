@@ -1,0 +1,273 @@
+<!-- Script Name: Template Standard - App Converter | Version: 3.1.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A professional, responsive wiki HTML template featuring a three-column layout, mobile sidebar, and integrated widgets. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+    <meta property="og:title" content="Wiki Template by Elton Boehnen">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <title>App Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">&#x2715;</span>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom:24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+                    <a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-app-converter" container-type="inline-size">
+            <div class="content-card" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span id="status-dot" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #666;"></span>
+                    <div id="app-status-indicator" style="font-weight: 500; font-size: 0.95rem;">Idle: No API keys loaded</div>
+                </div>
+                <button id="open-chat-settings" class="pnx-btn">⚙️ Settings</button>
+            </div>
+
+            <div class="card-feed-section" id="phoenix-converter-client">
+                <div class="content-card" style="margin-bottom: 0; display: flex; flex-direction: column; height: 700px; position: relative; overflow: hidden;">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div>
+                            <h3 class="card-feed-title" style="margin-bottom: 4px;">App Converter</h3>
+                            <p class="card-feed-description" style="margin: 0; font-size: 0.85rem;">Deconstruct & rebuild codebase via Phoenix Protocol.</p>
+                        </div>
+                    </div>
+
+                    <div class="pnx-panel">
+                        <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 250px;">
+                                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 6px;">1. Load Source Code</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="file" id="file-input" multiple style="display: none;">
+                                    <input type="file" id="folder-input" webkitdirectory style="display: none;">
+                                    <input type="file" id="zip-input" accept=".zip" style="display: none;">
+                                    <button class="pnx-btn" id="btn-select-files" title="Select multiple files">Files</button>
+                                    <button class="pnx-btn" id="btn-select-folder" title="Select a directory">Folder</button>
+                                    <button class="pnx-btn" id="btn-select-zip" title="Upload a .zip archive">ZIP</button>
+                                    <button class="pnx-btn" id="btn-open-filters" title="Import Filters" style="margin-left: auto;">⚙️ Filters</button>
+                                </div>
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 200px;">
+                                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 6px;">2. Select Target Stack</label>
+                                <select id="target-stack" class="pnx-select">
+                                    <option value="React & Tailwind (Web)">React & Tailwind (Web)</option>
+                                    <option value="React Native (Mobile)">React Native (Mobile)</option>
+                                    <option value="Next.js">Next.js</option>
+                                    <option value="Flutter / Dart">Flutter / Dart</option>
+                                    <option value="Python / Tkinter">Python / Tkinter</option>
+                                    <option value="Vue 3 & Vite">Vue 3 & Vite</option>
+                                    <option value="Vanilla HTML/CSS/JS">Vanilla HTML/CSS/JS</option>
+                                    <option value="Swift / iOS">Swift / iOS</option>
+                                </select>
+                            </div>
+
+                            <div style="display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin-top: auto;" id="action-buttons">
+                                <button id="btn-deconstruct" class="pnx-btn pnx-btn-primary" style="padding: 9px 24px;">1. Deconstruct</button>
+                                <button id="btn-deeper" class="pnx-btn pnx-btn-action" style="display: none; padding: 9px 16px;">🔍 Dig Deeper</button>
+                                <button id="btn-rebuild" class="pnx-btn pnx-btn-success" style="display: none; padding: 9px 16px;">✅ Approve & Rebuild</button>
+                                <button id="btn-reset" class="pnx-btn" style="display: none; padding: 9px 16px;">Restart</button>
+                            </div>
+                        </div>
+
+                        <div class="c-app-converter__file-list">
+                            <strong>Loaded Files: </strong> <span id="file-list-preview">None</span>
+                        </div>
+                    </div>
+
+                    <div class="pnx-output-box" id="output-area">
+                        <div style='color: #666; text-align: center; margin-top: 20px;'>
+                            <i>Awaiting codebase upload to initiate the Phoenix Protocol...</i>
+                        </div>
+                    </div>
+
+                    <div id="filter-settings-overlay" class="chat-settings-overlay">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2 style="margin: 0; font-size: 1.1rem;">Import Filters</h2>
+                            <button id="close-filter-settings" class="settings-close-btn" style="align-self: center;">✕</button>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem;">
+                            <p style="margin: 0 0 8px 0; color: #666; font-size: 0.85rem;">Select which files/folders to ignore during folder or ZIP imports.</p>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="filter-node" checked> Ignore node_modules
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="filter-git" checked> Ignore .git / .github
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="filter-build" checked> Ignore build output (dist, build, .next)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="filter-lock" checked> Ignore lock files (package-lock.json, yarn.lock, pnpm-lock.yaml)
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="filter-hidden"> Ignore all hidden files & folders (.*)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="chat-settings-overlay" class="chat-settings-overlay">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2 style="margin: 0;">System Settings</h2>
+                            <button id="close-chat-settings" class="settings-close-btn" style="align-self: center;">✕</button>
+                        </div>
+                        
+                        <details class="setting-group" open>
+                            <summary>AI Configuration</summary>
+                            <div style="padding-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;">Key Template</label>
+                                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: nowrap;">
+                                        <input type="file" id="bejson-import" accept=".bejson,.json" style="display: none;">
+                                        <button id="trigger-import" class="pnx-btn" style="flex: 1;">Import</button>
+                                        <button id="export-bejson-template" class="pnx-btn" style="flex: 1;">Export</button>
+                                    </div>
+                                    <div id="key-import-status" style="margin-top: 8px; font-size: 0.85rem; color: #666;"></div>
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-size: 0.95rem; font-weight: 500;">Model Selection</label>
+                                    <select id="model-select" class="pnx-select">
+                                        <option value="gemini-3.1-pro-preview" selected>Gemini 3.1 Pro (Preview)</option>
+                                        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                                        <option value="gemini-3-flash-preview">Gemini 3 Flash (Preview)</option>
+                                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Phoenix Protocol Script
+                let API_KEYS = [];
+                let MODEL = "gemini-3.1-pro-preview";
+                const getEndpoint = () => {
+                    const key = API_KEYS.length > 0 ? API_KEYS[Math.floor(Math.random() * API_KEYS.length)] : "";
+                    return `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${key}`;
+                };
+                const appStatusIndicator = document.getElementById("app-status-indicator");
+                const statusDot = document.getElementById("status-dot");
+                const fileListPreview = document.getElementById('file-list-preview');
+                const outputArea = document.getElementById('output-area');
+                function updateStatus(message, color) {
+                    if(appStatusIndicator) appStatusIndicator.textContent = message;
+                    if(statusDot) statusDot.style.backgroundColor = color;
+                }
+                const openSettingsBtn = document.getElementById("open-chat-settings");
+                const closeSettingsBtn = document.getElementById("close-chat-settings");
+                const settingsOverlay = document.getElementById("chat-settings-overlay");
+                const modelSelect = document.getElementById("model-select");
+                modelSelect.addEventListener("change", (e) => { MODEL = e.target.value; });
+                openSettingsBtn.addEventListener("click", () => settingsOverlay.classList.add("open"));
+                closeSettingsBtn.addEventListener("click", () => settingsOverlay.classList.remove("open"));
+                const bejsonImport = document.getElementById("bejson-import");
+                const triggerImportBtn = document.getElementById("trigger-import");
+                const keyImportStatus = document.getElementById("key-import-status");
+                const exportTemplateBtn = document.getElementById("export-bejson-template");
+                triggerImportBtn.addEventListener("click", () => bejsonImport.click());
+                exportTemplateBtn.addEventListener("click", () => {
+                    const templateData = { "Format": "BEJSON", "Format_Version": "104a", "Records_Type": ["ApiKey"], "Fields": [{"name": "key_slot", "type": "integer"}, {"name": "key", "type": "string"}], "Values": [[1, "KEY_1"]] };
+                    const jsonString = JSON.stringify(templateData, null, 2);
+                    const textArea = document.createElement("textarea");
+                    textArea.value = jsonString;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    keyImportStatus.innerHTML = "<span style='color: green;'>Template copied!</span>";
+                    document.body.removeChild(textArea);
+                });
+                bejsonImport.addEventListener("change", (e) => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const data = JSON.parse(event.target.result);
+                        API_KEYS = data.Values.map(row => row[1]);
+                        updateStatus(`${API_KEYS.length} keys loaded`, "green");
+                    };
+                    reader.readAsText(file);
+                });
+            </script>
+            </div>
+            <footer class="page-footer">
+                <span style="font-weight:600;color:#1a1a1a;">Elton Boehnen</span> &nbsp;|&nbsp;
+                <a href="mailto:boehnenelton2024@gmail.com">Email</a> &nbsp;|&nbsp;
+                <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+                <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+            </footer>
+        </main></main>
+
+        <aside class="right-column">
+            <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+    <div class="global-docked-footer">
+        <span style="font-weight:600;">Elton Boehnen</span> &nbsp;|&nbsp;
+        <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+        <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+    </div>
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+    </script>
+</body>
+</html>
+</html>

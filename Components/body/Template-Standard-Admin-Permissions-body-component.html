@@ -1,0 +1,67 @@
+<!-- Component Name: Template Standard - Admin Permissions | Type: Body Component | Version: 1.0.0 -->
+
+
+<div class="c-admin-permissions" container-type="inline-size">
+    <div class="content-card"><div>Define and manage access rights for system entities. Changes are broadcasted to all connected slave nodes.</div></div>
+            
+            <div class="perm-table-wrap">
+                <table class="perm-table">
+                    <thead>
+                        <tr>
+                            <th>User / Entity</th>
+                            <th>Read</th>
+                            <th>Write</th>
+                            <th>Execute</th>
+                            <th>Manage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar" style="background:#fde8e8; color:#de2626;">EB</div>
+                                    <div><b>Elton Boehnen</b><br><span style="font-size:0.75rem; color:#888;">Owner / Admin</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><span style="color:#1a7f37; font-weight:600;">ACTIVE</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">AI</div>
+                                    <div><b>Gemini CLI</b><br><span style="font-size:0.75rem; color:#888;">System Agent</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><span style="color:#1a7f37; font-weight:600;">ACTIVE</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">GN</div>
+                                    <div><b>Guest Node</b><br><span style="font-size:0.75rem; color:#888;">External Reader</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><span style="color:#888; font-weight:600;">STANDBY</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top:20px; display:flex; gap:12px;">
+                <button class="emphasis" style="padding: 10px 20px; background:#de2626; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Update Matrix</button>
+                <button style="padding: 10px 20px; background:#fff; color:#1a1a1a; border:1px solid #ccc; border-radius:6px; font-weight:500; cursor:pointer;">Export Policy</button>
+            </div>
+</div>

@@ -1,0 +1,61 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-black text-[#fe3626] uppercase tracking-tighter">Authors</h1>
+    <button onclick="document.getElementById('add-author-modal').classList.remove('hidden')" class="bg-[#fe3626] px-6 py-2 rounded-lg font-bold shadow-lg shadow-red-900/20">+ NEW AUTHOR</button>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for a in authors %}
+    <div class="bg-[#171717] p-8 rounded-2xl border border-gray-800 flex items-center gap-6 shadow-xl hover:border-[#fe3626]/50 transition-all group">
+        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-800 group-hover:border-[#fe3626] transition-colors bg-black flex-shrink-0">
+            {% if a.image_url %}
+            <img src="/media/serve/{{ a.image_url }}" class="w-full h-full object-cover">
+            {% else %}
+            <div class="w-full h-full flex items-center justify-center text-gray-700"><i data-lucide="user" class="w-8 h-8"></i></div>
+            {% endif %}
+        </div>
+        <div class="flex-grow">
+            <h3 class="font-bold text-xl text-gray-100 mb-1">{{ a.name }}</h3>
+            <p class="text-xs text-gray-500 line-clamp-2 leading-relaxed">{{ a.bio }}</p>
+        </div>
+        <div class="flex flex-col gap-2">
+            <button class="text-gray-600 hover:text-white"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+            <a href="/authors/delete/{{ a.author_uuid }}" class="text-gray-600 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="add-author-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+    <form method="POST" class="bg-[#171717] p-8 rounded-2xl border border-gray-800 w-full max-w-md flex flex-col gap-6 shadow-2xl">
+        <h2 class="text-2xl font-black text-[#fe3626] uppercase tracking-tighter">Add Author Profile</h2>
+        
+        <div>
+            <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2">Display Name</label>
+            <input name="name" placeholder="John Doe" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors" required>
+        </div>
+
+        <div>
+            <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2">Biography</label>
+            <textarea name="bio" placeholder="Short bio for the author..." class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors" required></textarea>
+        </div>
+
+        <div>
+            <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2">Avatar Asset</label>
+            <select name="image_url" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors">
+                <option value="">-- NO IMAGE --</option>
+                {% for a in assets %}
+                <option value="{{ a.filename }}">{{ a.filename }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="flex gap-4 mt-4">
+            <button type="submit" class="flex-1 bg-[#fe3626] py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg shadow-red-900/20">CREATE</button>
+            <button type="button" onclick="document.getElementById('add-author-modal').classList.add('hidden')" class="flex-1 bg-gray-800 py-4 rounded-xl font-bold uppercase tracking-widest">CANCEL</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

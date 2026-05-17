@@ -1,0 +1,62 @@
+<!-- Component Name: Template Standard - BEJSON Form | Type: Body Component | Version: 1.0.0 -->
+
+<div class="c-bejson-form" container-type="inline-size">
+    <div class="content-card">
+        <h2>BEJSON Entity Editor</h2>
+        <p class="emphasis">Standardized input suite for MFDB v1.3.1 compliance.</p>
+    </div>
+
+    <form class="c-bejson-form__form">
+        <!-- String Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">entity_name <span class="c-bejson-form__type">[string]</span></label>
+            <input type="text" class="c-bejson-form__input" placeholder="e.g. core_module_01">
+        </div>
+
+        <!-- Integer Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">priority_level <span class="c-bejson-form__type">[integer]</span></label>
+            <input type="number" step="1" class="c-bejson-form__input" placeholder="0">
+        </div>
+
+        <!-- Number Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">threshold_value <span class="c-bejson-form__type">[number]</span></label>
+            <input type="number" step="any" class="c-bejson-form__input" placeholder="0.00">
+        </div>
+
+        <!-- Boolean Field -->
+        <div class="c-bejson-form__field c-bejson-form__field--row">
+            <label class="c-bejson-form__label">is_active <span class="c-bejson-form__type">[boolean]</span></label>
+            <input type="checkbox" class="c-bejson-form__checkbox">
+        </div>
+
+        <!-- Array Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">tags_registry <span class="c-bejson-form__type">[array]</span></label>
+            <textarea class="c-bejson-form__textarea" placeholder='["tag1", "tag2"]'></textarea>
+            <small class="c-bejson-form__help">Enter as a JSON-formatted array.</small>
+        </div>
+
+        <!-- Object Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">metadata_blob <span class="c-bejson-form__type">[object]</span></label>
+            <textarea class="c-bejson-form__textarea" placeholder='{"key": "value"}'></textarea>
+            <small class="c-bejson-form__help">Enter as a JSON-formatted object.</small>
+        </div>
+
+        <!-- Null / Optional Field -->
+        <div class="c-bejson-form__field">
+            <label class="c-bejson-form__label">external_link <span class="c-bejson-form__type">[string | null]</span></label>
+            <div class="c-bejson-form__input-group">
+                <input type="text" class="c-bejson-form__input" placeholder="https://...">
+                <button type="button" class="c-bejson-form__btn-null">Set Null</button>
+            </div>
+        </div>
+
+        <div class="c-bejson-form__actions">
+            <button type="submit" class="c-bejson-form__btn-submit">Commit Record</button>
+            <button type="reset" class="c-bejson-form__btn-reset">Reset</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,43 @@
+<!-- RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4 -->
+<!-- VERSION: v1.0.0-alpha -->
+<!-- CREDITS: Elton Boehnen (github.com/boehnenelton) -->
+<!-- DATE: 2026-04-25 -->
+<!-- FILE: editor_base.html -->
+
+<!-- RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4 -->
+<!-- VERSION: v1.0.0-alpha -->
+<!-- CREDITS: Elton Boehnen (github.com/boehnenelton) -->
+<!-- DATE: 2026-04-25 -->
+<!-- FILE: editor_base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MFDB Page Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background: #0f0f0f; color: #e5e5e5; font-family: sans-serif; }
+        .form-input { background: #171717; border: 1px solid #333; border-radius: 8px; padding: 12px; width: 100%; color: white; }
+        .form-input:focus { outline: none; border-color: #fe3626; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-[#111] border-b border-gray-800 p-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <a href="/" class="text-gray-400 hover:text-white"><i data-lucide="arrow-left"></i></a>
+            <h1 class="font-bold text-xl">MFDB <span class="text-red-500">Editor</span></h1>
+        </div>
+        <div class="flex gap-4">
+             <button onclick="document.getElementById('editor-form').submit()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-bold flex items-center gap-2">
+                <i data-lucide="save"></i> SAVE PAGE
+            </button>
+        </div>
+    </header>
+    <main class="flex-grow p-8">
+        {% block content %}{% endblock %}
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

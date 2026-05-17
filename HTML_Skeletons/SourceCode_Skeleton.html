@@ -1,0 +1,30 @@
+<!-- ExpCSS RECONSTRUCTION | Source Code Skeleton v2.0 -->
+<div class="c-code-viewer" container-type="inline-size">
+    <div class="content-card mb-8">
+        <h1 class="text-3xl font-black mb-4">{{ title }}</h1>
+        <div class="prose prose-invert max-w-none text-gray-400">
+            {{ html_body | safe }}
+        </div>
+    </div>
+
+    {% for file in source_files %}
+    <div class="code-block-wrap mb-6">
+        <div class="code-header">
+            <span class="code-lang">{{ file.filename | upper }}</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-{{ file.filename.split('.')[-1] }}">{{ file.content }}</code></pre>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    function copyCode(btn) {
+        const pre = btn.parentElement.nextElementSibling;
+        const code = pre.innerText;
+        navigator.clipboard.writeText(code);
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = originalText; }, 2000);
+    }
+</script>

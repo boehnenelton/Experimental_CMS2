@@ -1,0 +1,45 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-black text-[#fe3626] uppercase tracking-tighter">Site Navigation</h1>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div class="lg:col-span-2">
+        {% set columns = ['Label', 'Target URL'] %}
+        {% set rows = [] %}
+        {% for l in links %}
+            {% set actions = [
+                {'url': '/navigation/delete/' + l.label, 'label': 'Delete', 'class': 'text-red-500'}
+            ] %}
+            {% do rows.append({
+                'label': l.label,
+                'url': l.url,
+                '_actions': actions
+            }) %}
+        {% endfor %}
+
+        {% with columns=columns, rows=rows %}
+            {% include "components/backend/Data-Table.html" %}
+        {% endwith %}
+    </div>
+    
+    <div>
+        <div class="bg-[#171717] p-8 rounded-2xl border border-gray-800 shadow-xl h-fit">
+            <h2 class="text-xl font-black text-[#fe3626] uppercase tracking-tighter mb-6">Add Custom Link</h2>
+            <form method="POST" class="flex flex-col gap-6">
+                <div>
+                    <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2">Display Label</label>
+                    <input name="label" placeholder="GitHub" class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors" required>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-mono text-gray-500 uppercase mb-2">Destination URL</label>
+                    <input name="url" placeholder="https://..." class="w-full bg-black p-4 rounded-xl border border-gray-800 focus:border-[#fe3626] transition-colors" required>
+                </div>
+                <button type="submit" class="bg-[#fe3626] py-4 rounded-xl font-bold uppercase tracking-widest shadow-lg shadow-red-900/20">ADD TO MENU</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

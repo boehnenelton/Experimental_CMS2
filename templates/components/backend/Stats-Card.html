@@ -1,0 +1,15 @@
+<!-- Component: Admin Stats Card | Type: Backend Fragment | Version: 1.1.0 -->
+<div class="content-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-main); text-transform: uppercase;">{{ title }}</h2>
+        <i data-lucide="{{ icon }}" style="color: var(--primary); width: 20px; height: 20px;"></i>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 16px;">
+        {% for label, value in stats.items() %}
+        <div style="padding: 16px; background: var(--bg-page); border: 1px solid var(--border); border-radius: var(--radius);">
+            <span style="display: block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">{{ label }}</span>
+            <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">{{ value }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>

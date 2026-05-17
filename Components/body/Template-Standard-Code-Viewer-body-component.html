@@ -1,0 +1,33 @@
+<!-- Component Name: Template Standard - Code Viewer | Type: Body Component | Version: 1.0.0 -->
+
+
+<div class="c-code-viewer" container-type="inline-size">
+    <div class="content-card"><div>Code reference placeholder. Replace with documentation context and usage notes.</div></div>
+            <div class="code-block-wrap">
+                <div class="code-header"><span class="code-lang">PYTHON</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <pre><span class="cm">// Function placeholder</span>
+<span class="kw">def</span> <span class="fn">function_name</span>(param_one, param_two):
+    result = param_one + param_two
+    <span class="kw">return</span> result
+
+output = <span class="fn">function_name</span>(<span class="num">10</span>, <span class="num">20</span>)
+<span class="fn">print</span>(<span class="str">f"Result: {output}"</span>)</pre>
+            </div>
+            <div class="code-block-wrap">
+                <div class="code-header"><span class="code-lang">BASH</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <pre><span class="cm">#!/bin/bash</span>
+<span class="kw">VAR</span>=<span class="str">"value"</span>
+
+<span class="kw">if</span> [ <span class="str">"$VAR"</span> = <span class="str">"value"</span> ]; <span class="kw">then</span>
+    echo <span class="str">"Condition met"</span>
+<span class="kw">fi</span></pre>
+            </div>
+            <div class="code-block-wrap">
+                <div class="code-header"><span class="code-lang">JSON</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <pre>{
+  <span class="str">"key_one"</span>: <span class="str">"value_one"</span>,
+  <span class="str">"key_two"</span>: <span class="num">42</span>,
+  <span class="str">"key_three"</span>: [<span class="str">"item_a"</span>, <span class="str">"item_b"</span>]
+}</pre>
+            </div>
+</div>

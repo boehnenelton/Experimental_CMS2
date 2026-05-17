@@ -1,0 +1,160 @@
+<!-- Script Name: Template Standard - Admin Permissions | Version: 1.0.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A professional, responsive wiki HTML template featuring a three-column layout, mobile sidebar, and integrated widgets. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+    <meta property="og:title" content="Wiki Template by Elton Boehnen">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <title>Article Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+    
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">&#x2715;</span>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom:24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight:600;margin-bottom:12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+                    <a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size:0.85em;opacity:0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-admin-permissions" container-type="inline-size">
+            <h1 class="emphasis">Permission Matrix</h1>
+            <div class="content-card"><div>Define and manage access rights for system entities. Changes are broadcasted to all connected slave nodes.</div></div>
+            
+            <div class="perm-table-wrap">
+                <table class="perm-table">
+                    <thead>
+                        <tr>
+                            <th>User / Entity</th>
+                            <th>Read</th>
+                            <th>Write</th>
+                            <th>Execute</th>
+                            <th>Manage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar" style="background:#fde8e8; color:#de2626;">EB</div>
+                                    <div><b>Elton Boehnen</b><br><span style="font-size:0.75rem; color:#888;">Owner / Admin</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><input type="checkbox" class="perm-check" checked disabled></td>
+                            <td><span style="color:#1a7f37; font-weight:600;">ACTIVE</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">AI</div>
+                                    <div><b>Gemini CLI</b><br><span style="font-size:0.75rem; color:#888;">System Agent</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><span style="color:#1a7f37; font-weight:600;">ACTIVE</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="user-info">
+                                    <div class="user-avatar">GN</div>
+                                    <div><b>Guest Node</b><br><span style="font-size:0.75rem; color:#888;">External Reader</span></div>
+                                </div>
+                            </td>
+                            <td><input type="checkbox" class="perm-check" checked></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><input type="checkbox" class="perm-check"></td>
+                            <td><span style="color:#888; font-weight:600;">STANDBY</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top:20px; display:flex; gap:12px;">
+                <button class="emphasis" style="padding: 10px 20px; background:#de2626; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Update Matrix</button>
+                <button style="padding: 10px 20px; background:#fff; color:#1a1a1a; border:1px solid #ccc; border-radius:6px; font-weight:500; cursor:pointer;">Export Policy</button>
+            </div>
+            <footer class="page-footer">
+                <span style="font-weight:600;color:#1a1a1a;">Elton Boehnen</span> &nbsp;|&nbsp;
+                <a href="mailto:boehnenelton2024@gmail.com">Email</a> &nbsp;|&nbsp;
+                <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+                <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+            </footer>
+            </div>
+        </main></main>
+
+        <aside class="right-column">
+            <div style="font-weight:600;margin-bottom:12px;padding:0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+    <div class="global-docked-footer">
+        <span style="font-weight:600;">Elton Boehnen</span> &nbsp;|&nbsp;
+        <a href="https://github.com/boehnenelton/" target="_blank">GitHub</a> &nbsp;|&nbsp;
+        <a href="https://boehnenelton2024.pages.dev" target="_blank">Website</a>
+    </div>
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+    </script>
+</body>
+</html>

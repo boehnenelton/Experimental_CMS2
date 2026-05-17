@@ -1,0 +1,15 @@
+<!-- Component: Admin Stats Card | Type: Backend Fragment | Version: 1.0.0 -->
+<div class="bg-[#171717] p-8 rounded-2xl border border-gray-800 shadow-xl">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold uppercase tracking-widest text-gray-400">{{ title }}</h2>
+        <i data-lucide="{{ icon }}" class="text-gray-600"></i>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+        {% for label, value in stats.items() %}
+        <div class="bg-black/40 p-4 rounded-xl border border-gray-900">
+            <span class="block text-xs font-mono text-gray-500 uppercase mb-1">{{ label }}</span>
+            <span class="text-2xl font-bold">{{ value }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>

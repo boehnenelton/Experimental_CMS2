@@ -1,0 +1,39 @@
+<!-- Component: Admin Data Table | Type: Backend Fragment | Version: 1.1.0 -->
+<div class="content-card" style="padding: 0; overflow: hidden;">
+    <div class="c-bejson-table__scroller" style="background: var(--bg-page);">
+        <table class="c-bejson-table__table">
+            <thead style="background: var(--bg-alt);">
+                <tr>
+                    {% for col in columns %}
+                    <th class="c-bejson-table__th" style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">{{ col }}</th>
+                    {% endfor %}
+                    <th class="c-bejson-table__th" style="text-align: right; color: var(--text-muted); font-size: 0.75rem;">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr style="border-bottom: 1px solid var(--border-muted);">
+                    {% for key, val in row.items() %}
+                    {% if key != '_actions' %}
+                    <td class="c-bejson-table__td" style="color: var(--text-main); font-size: 0.9rem;">
+                        {% if key == 'status' %}
+                            <span class="c-bejson-table__status c-bejson-table__status--{{ 'true' if val else 'false' }}">{{ val | upper }}</span>
+                        {% elif key == 'slug' or key == 'uuid' or key == 'url' %}
+                            <code style="font-size: 0.75rem; color: var(--primary);">{{ val }}</code>
+                        {% else %}
+                            {{ val }}
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                    <td class="c-bejson-table__td" style="text-align: right;">
+                        {% for action in row._actions %}
+                        <a href="{{ action.url }}" class="{{ action.class }}" style="font-weight: 700; font-size: 0.75rem; text-transform: uppercase; margin-left: 12px; text-decoration: none;">{{ action.label }}</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

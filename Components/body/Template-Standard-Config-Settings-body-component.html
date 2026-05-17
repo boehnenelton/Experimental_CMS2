@@ -1,0 +1,55 @@
+<!-- Component Name: Template Standard - Config Settings | Type: Body Component | Version: 1.0.0 -->
+
+
+<div class="c-config-settings" container-type="inline-size">
+    <div class="content-card"><div>Adjust global system parameters and security protocols. Changes are saved to <code>environment_map.104a.bejson</code>.</div></div>
+            
+            <div class="settings-section">
+                <h3>General Environment</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <span class="label">Debug Mode</span>
+                        <span class="desc">Enable verbose logging and developer tools in the console.</span>
+                    </div>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <span class="label">Maintenance Mode</span>
+                        <span class="desc">Restrict public access to the dashboard.</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <span class="label">Default Model</span>
+                        <span class="desc">Primary LLM used for autonomous tasks.</span>
+                    </div>
+                    <select class="form-select">
+                        <option>Gemini 3.1 Pro</option>
+                        <option>Gemini 3 Flash</option>
+                        <option>Gemma 4 31B</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3>Security Protocols</h3>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <span class="label">Auto-Lock Vault</span>
+                        <span class="desc">Lock API keys after 30 minutes of inactivity.</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <span class="label">MFDB Atomic Write</span>
+                        <span class="desc">Enforce mandatory double-sync on all file operations.</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+            </div>
+
+            <button class="emphasis" style="padding: 10px 20px; background:#de2626; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Save Changes</button>
+</div>

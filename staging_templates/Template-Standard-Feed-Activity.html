@@ -1,0 +1,206 @@
+<!-- Script Name: Template Standard - Activity Feed | Version: 1.0.0 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A professional, responsive activity and notification feed HTML template featuring a three-column layout, grouped notification stream, unread badges, and filter controls. Created by Elton Boehnen.">
+    <meta name="author" content="Elton Boehnen">
+    <meta name="keywords" content="activity feed template, notification feed, HTML template, responsive design, Elton Boehnen, frontend">
+    <link rel="canonical" href="https://boehnenelton2024.pages.dev">
+
+    <meta property="og:title" content="Activity Feed Template by Elton Boehnen">
+    <meta property="og:description" content="A professional, responsive activity and notification feed HTML template with grouped stream, unread badges, and filter controls.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://boehnenelton2024.pages.dev">
+    <meta property="og:site_name" content="Elton Boehnen Portfolio">
+
+    <title>Activity Feed Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/becss-core.css">
+    <link rel="stylesheet" href="css/becss-components.css">
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="mobile-sidebar" id="mobileNav">
+        <div class="sidebar-top">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Nav Section Title</span>
+                <span class="close-sidebar" id="closeSidebar">✕</span>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 1</div>
+            <div class="sidebar-links" style="margin-bottom: 24px;">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+            <div style="font-weight: 600; margin-bottom: 12px;">Nav Section 2</div>
+            <div class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </div>
+        </div>
+        <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+    </nav>
+
+    <header>
+        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="header-logo">Header Section</div>
+    </header>
+
+    <div class="breadcrumbs">
+        <a href="#">Breadcrumb 1</a> / <a href="#">Breadcrumb 2</a> / <span>Breadcrumb 3</span>
+    </div>
+
+    <div class="container">
+        <aside class="left-column">
+            <div class="sidebar-top">
+                <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Left Column Section</div>
+                <nav class="sidebar-links">
+                    <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a><a href="#">Link 4</a><a href="#">Link 5</a>
+                </nav>
+            </div>
+            <div class="sidebar-bottom"><div>Placeholder Widget<br><span style="font-size: 0.85em; opacity: 0.8;">Rec. Size: 200w x 250h</span></div></div>
+        </aside>
+
+        <main class="middle-column">
+            <div class="c-feed-activity" container-type="inline-size">
+            <h1 class="emphasis">Activity Feed</h1>
+
+            <div class="content-card">
+                <div>Your recent notifications and activity. Unread items are highlighted in red.</div>
+            </div>
+
+            <div class="activity-header-row">
+                <div class="activity-filter-tabs">
+                    <span class="activity-tab active">All <span class="activity-unread-badge">5</span></span>
+                    <span class="activity-tab">Mentions</span>
+                    <span class="activity-tab">Comments</span>
+                    <span class="activity-tab">System</span>
+                </div>
+                <a href="#" class="activity-mark-read">Mark all as read</a>
+            </div>
+
+            <div class="activity-stream">
+
+                <div class="activity-group-label">Today</div>
+
+                <div class="activity-item activity-item--unread">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">💬</div>
+                        <div class="activity-dot"></div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>User Name</strong> replied to your comment on <a href="#">Post Title Goes Here</a></p>
+                        <div class="activity-preview">"This is a short preview of what the reply said — truncated after a certain length..."</div>
+                        <span class="activity-time">2 minutes ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item activity-item--unread">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">🔔</div>
+                        <div class="activity-dot"></div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>System</strong> — Your submission <a href="#">Submission Title</a> was approved and is now published.</p>
+                        <span class="activity-time">1 hour ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-item activity-item--unread">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">⭐</div>
+                        <div class="activity-dot"></div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>Another User</strong> and <strong>2 others</strong> liked your post — <a href="#">Post Title Goes Here</a></p>
+                        <span class="activity-time">3 hours ago</span>
+                    </div>
+                </div>
+
+                <div class="activity-group-label">Yesterday</div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">👤</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>User Name</strong> started following you.</p>
+                        <span class="activity-time">Yesterday at 6:45 PM</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">📎</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>User Name</strong> mentioned you in <a href="#">A Discussion Thread Title</a></p>
+                        <div class="activity-preview">"Preview of the mention context — a sentence showing where your name appeared..."</div>
+                        <span class="activity-time">Yesterday at 2:10 PM</span>
+                    </div>
+                </div>
+
+                <div class="activity-group-label">Older</div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-wrap">
+                        <div class="activity-icon">🔔</div>
+                    </div>
+                    <div class="activity-body">
+                        <p class="activity-text"><strong>System</strong> — Your account reached a new milestone: <a href="#">Milestone Name or Badge</a></p>
+                        <span class="activity-time">May 5, 2025</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="activity-pagination">
+                <div class="activity-page-btn">&#8249;</div>
+                <div class="activity-page-btn active">1</div>
+                <div class="activity-page-btn">2</div>
+                <div class="activity-page-btn">3</div>
+                <div class="activity-page-btn">&#8250;</div>
+            </div>
+
+            <footer class="page-footer">
+                <span style="font-weight: 600; color: #1a1a1a;">Author Name</span> &nbsp;|&nbsp;
+                <a href="#">Email Link</a> &nbsp;|&nbsp;
+                <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+                <a href="#">Website Link</a>
+            </footer>
+            </div>
+        </main>
+
+        <aside class="right-column">
+            <div style="font-weight: 600; margin-bottom: 12px; padding: 0 8px;">Right Column Section</div>
+            <nav class="sidebar-links">
+                <a href="#">Link 1</a><a href="#">Link 2</a><a href="#">Link 3</a>
+            </nav>
+        </aside>
+    </div>
+
+    <div class="global-docked-footer">
+        <span style="font-weight: 600;">Author Name</span> &nbsp;|&nbsp;
+        <a href="#">Social Link 1</a> &nbsp;|&nbsp;
+        <a href="#">Website Link</a>
+    </div>
+
+    <script>
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        function toggleSidebar() {
+            mobileNav.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        }
+        hamburgerToggle.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html>

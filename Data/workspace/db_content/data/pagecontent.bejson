@@ -1,0 +1,108 @@
+{
+  "Format": "BEJSON",
+  "Format_Version": "104",
+  "Format_Creator": "Elton Boehnen",
+  "Parent_Hierarchy": "../104a.mfdb.bejson",
+  "Records_Type": [
+    "PageContent"
+  ],
+  "Fields": [
+    {
+      "name": "page_uuid_fk",
+      "type": "string"
+    },
+    {
+      "name": "html_body",
+      "type": "string"
+    },
+    {
+      "name": "markdown_body",
+      "type": "string"
+    },
+    {
+      "name": "source_files",
+      "type": "array"
+    },
+    {
+      "name": "video_url",
+      "type": "string"
+    },
+    {
+      "name": "pdf_url",
+      "type": "string"
+    },
+    {
+      "name": "pros",
+      "type": "array"
+    },
+    {
+      "name": "cons",
+      "type": "array"
+    },
+    {
+      "name": "verdict_score",
+      "type": "number"
+    }
+  ],
+  "Values": [
+    [
+      "f3e3cdbb-a561-4f09-82c9-3b9709bbaa74",
+      "<h2>Mastering the Standard</h2><p>Complete guide to positional integrity and multi-file database orchestration.</p>",
+      "",
+      [],
+      "",
+      "",
+      [],
+      [],
+      0.0
+    ],
+    [
+      "3dea1dac-dd7c-4bea-961d-ff22197cc7ac",
+      "Official Python client for atomic MFDB operations.",
+      "",
+      [
+        {
+          "filename": "main.py",
+          "content": "print('Python Core Active')"
+        }
+      ],
+      "",
+      "",
+      [],
+      [],
+      0.0
+    ],
+    [
+      "7b648d66-20d5-4521-b21d-ef064a637353",
+      "CI/CD pipelines for static site generation.",
+      "",
+      [
+        {
+          "filename": "deploy.sh",
+          "content": "echo 'Deploying...'"
+        }
+      ],
+      "",
+      "",
+      [],
+      [],
+      0.0
+    ],
+    [
+      "bba8d591-af95-498f-b1f6-00a5b2a9a265",
+      "High-performance vanilla JS components.",
+      "",
+      [
+        {
+          "filename": "core.js",
+          "content": "console.log('JS Core Active')"
+        }
+      ],
+      "",
+      "",
+      [],
+      [],
+      0.0
+    ]
+  ]
+}
