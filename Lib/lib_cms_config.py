@@ -1,20 +1,14 @@
 """
-Library:     lib_cms_config.py
-MFDB Version: 1.3.1
+Library:      lib_cms_config.py
+Family:       CMS
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
-"""
-"""
-Library:     lib_cms_config.py
-Family:      CMS
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — BEJSON/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: Backend library for managing CMS site configuration (BEJSON 104db).
-             Part of the Modular CMS Backend Framework.
+Date:         2026-05-18
+Description:  Configuration manager for CMS-specific settings.
 """
 
 import os

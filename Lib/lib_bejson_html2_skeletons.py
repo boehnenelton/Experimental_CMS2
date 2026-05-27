@@ -1,21 +1,14 @@
 """
-Library:     lib_bejson_html2_skeletons.py
-MFDB Version: 1.3.1
+Library:      lib_bejson_html2_skeletons.py
+Family:       HTML3
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
-"""
-"""
-[PUBLISH: TRUE, TARGET: FIREBASE]
-Library:     lib_bejson_html2_skeletons.py
-Family:      HTML
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — BEJSON/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-06
-Description: Authoritative HTML/CSS skeleton templates for Core-Command.
-             Updated: v2.0 Global Footer with Authoritative Contact Info.
+Date:         2026-05-18
+Description:  Pre-defined HTML structure templates for rapid page generation.
 """
 
 import html as html_mod

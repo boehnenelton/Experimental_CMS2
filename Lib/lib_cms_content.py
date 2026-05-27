@@ -1,21 +1,14 @@
 """
-Library:     lib_cms_content.py
-MFDB Version: 1.3.1
+Library:      lib_cms_content.py
+Family:       CMS
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
-"""
-"""
-Library:     lib_cms_content.py
-Family:      CMS
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — BEJSON/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: Core content management library for Page and Article CRUD.
-             Handles dual-file BEJSON structure (Master Index + Content JSON).
-             Part of the Modular CMS Backend Framework.
+Date:         2026-05-18
+Description:  Content handler and transformer for the CMS engine.
 """
 
 import os
@@ -23,7 +16,7 @@ import sys
 import uuid
 import re
 from datetime import datetime
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 
 # Ensure local directory is in path for relative imports
 LIB_DIR = os.path.dirname(os.path.abspath(__file__))

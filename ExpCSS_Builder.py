@@ -23,6 +23,8 @@ if LIB_DIR not in sys.path:
     sys.path.append(LIB_DIR)
 
 from lib_cms_mfdb import MFDB_CMS_Manager
+from lib_html3_app_layout import HTML3_App_Layout
+from lib_html3_list_renderer import HTML3_List_Renderer
 import lib_mfdb_core as MFDBCore
 
 class ExpCSS_Builder:
@@ -79,9 +81,36 @@ class ExpCSS_Builder:
         header_raw = self._read_template("components/headers/Template-Header-Telemetry-HUD.html")
         header_html = Template(header_raw).render({"site_title": site_config.get("site_title", "boehnenelton2024")})
 
-        # Footer: Status Feed
+        # Footer: Status Feed + Contact Info
         footer_raw = self._read_template("components/footers/Template-Footer-Status-Feed.html")
         footer_html = Template(footer_raw).render()
+        
+        contact_footer = """
+        <div class="c-footer-links" style="background: #050505; border-top: 1px solid #222; padding: 2rem; margin-top: 4rem;">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h4 style="color: #DE2626; font-weight: 800; margin-bottom: 1rem;">CONTACT</h4>
+                    <p style="font-size: 0.8rem; color: #888;">Email: info@boehnenelton.dev</p>
+                    <p style="font-size: 0.8rem; color: #888;">Location: Distributed Node</p>
+                </div>
+                <div>
+                    <h4 style="color: #DE2626; font-weight: 800; margin-bottom: 1rem;">RESOURCES</h4>
+                    <ul style="list-style: none; padding: 0; font-size: 0.8rem; color: #888;">
+                        <li><a href="#" style="color: inherit;">Documentation</a></li>
+                        <li><a href="#" style="color: inherit;">API Status</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: #DE2626; font-weight: 800; margin-bottom: 1rem;">LEGAL</h4>
+                    <ul style="list-style: none; padding: 0; font-size: 0.8rem; color: #888;">
+                        <li><a href="#" style="color: inherit;">Privacy Policy</a></li>
+                        <li><a href="#" style="color: inherit;">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        """
+        footer_html += contact_footer
 
         self.global_context = {
             "site_title": site_config.get("site_title", "ExpCSS"),
@@ -127,16 +156,39 @@ class ExpCSS_Builder:
                     shutil.copy2(s, d)
 
     def _generate_sidebar(self, context, rel_prefix=""):
-        sidebar_raw = self._read_template("components/sidebars/Sidebar-Nav-Tree.html")
-        # Generate dynamic list for categories
-        cat_links = ""
-        for cat in context["categories"]:
-            cat_links += f'<a href="{rel_prefix}{cat["slug"]}/index.html" class="c-sidebar__link">{cat["name"]}</a>\n'
+        renderer = HTML3_List_Renderer()
+        # Create temporary BEJSON for navigation
+        nav_values = []
+        for i, cat in enumerate(context["categories"]):
+            nav_values.append([f"cat_{i}", cat["name"], cat.get("description", ""), None, f"{rel_prefix}{cat['slug']}/index.html"])
         
-        # Replace the placeholder in the Nav Tree
-        sidebar_html = sidebar_raw.replace('<a class="c-sidebar__link">Core</a>', cat_links)
-        sidebar_html = sidebar_html.replace('SYSTEM', 'CATEGORIES')
-        return sidebar_html
+        # Add a placeholder for contact/info
+        nav_values.append(["inf1", "Contact Us", "Get in touch", None, f"{rel_prefix}contact.html"])
+
+        nav_doc = {
+            "Format": "BEJSON",
+            "Format_Version": "104",
+            "Format_Creator": "Elton Boehnen",
+            "Records_Type": ["NavItem"],
+            "Fields": [
+                {"name": "id", "type": "string"},
+                {"name": "title", "type": "string"},
+                {"name": "description", "type": "string"},
+                {"name": "parent_id_fk", "type": "string"},
+                {"name": "url", "type": "string"}
+            ],
+            "Values": nav_values
+        }
+        
+        import json
+        temp_nav_path = os.path.join(self.output_dir, "temp_nav.bejson")
+        with open(temp_nav_path, 'w') as f:
+            json.dump(nav_doc, f)
+            
+        # Using TREE mode for sidebar as per "tree nav" request
+        html = renderer.render(temp_nav_path, mode="TREE", title="EXPLORE SITE")
+        os.remove(temp_nav_path)
+        return html
 
     def _render_page(self, main_content, context, rel_prefix="", related_block=""):
         # Inject Sidebar

@@ -1,34 +1,37 @@
 """
-Library:     lib_bejson_genai.py
-MFDB Version: 1.3.1
+Library:      lib_bejson_genai.py
+Family:       AI
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
+Date:         2026-05-18
+Description:  Interface for Google Generative AI (GenAI) models.
 """
-"""
-Library:     lib_bejson_genai.py
-Family:      AI
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — BEJSON/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: Gemini GenAI (SDK) integration library following the GENAI-POLICY.
-             Handles round-robin key rotation, model selection (v2.5+),
-             and mandatory status feedback for no-hang operations.
-"""
+
 import os
 import json
 import time
 import random
 import sys
 from datetime import datetime
-from typing import List, Dict, Any, Optional, Callable
+from typing import Any, Callable, Dict, List, Optional
 
 # Add Lib directory to path for relative imports
 LIB_DIR = os.path.dirname(os.path.abspath(__file__))
 if LIB_DIR not in sys.path:
     sys.path.append(LIB_DIR)
+
+CORE_DIR = os.path.join(os.path.dirname(LIB_DIR), "Core")
+if CORE_DIR not in sys.path:
+    sys.path.append(CORE_DIR)
+
+try:
+    from lib_bejson_env import resolve_path
+except ImportError:
+    def resolve_path(p): return p
 
 # ANSI Status Colors
 C_RED = "\033[91m"
@@ -37,7 +40,7 @@ C_YELLOW = "\033[93m"
 C_NC = "\033[0m"
 C_BOLD = "\033[1m"
 
-DEFAULT_KEY_FILE = "/Data/Data/com.termux/files/home/.env/gemini_keys.bejson"
+DEFAULT_KEY_FILE = resolve_path("{HOME}/.env/gemini_keys.bejson")
 
 MODELS = [
     "gemini-3-flash-preview",
@@ -128,6 +131,27 @@ class GenAIClient:
             # Simple ANSI line overwrite status
             sys.stdout.write(f"\r{C_BOLD}STATUS:{C_NC} {color}{msg}{C_NC} {' ' * 20}\r")
             sys.stdout.flush()
+
+    def embed_content(self, text: str, model: str = "models/gemini-embedding-001") -> Optional[List[float]]:
+        """Generate embeddings for the given text."""
+        if not self.sdk_available:
+            self.update_status("error", "ERROR: google-genai SDK not installed.")
+            return None
+
+        key_count = self.km.get_key_count()
+        if key_count == 0:
+            self.update_status("error", "ERROR: No API keys found.")
+            return None
+
+        for i in range(key_count):
+            api_key = self.km.get_next_key()
+            try:
+                client = self.genai.Client(api_key=api_key)
+                response = client.models.embed_content(model=model, contents=text)
+                return response.embeddings[0].values
+            except Exception:
+                continue
+        return None
 
     def generate_content(self, prompt: str, model: str = "gemini-3-flash-preview", system_instruction: str = None) -> Optional[str]:
         """Generate content with automatic key rotation and mandatory status feedback."""

@@ -1,21 +1,17 @@
 """
-Library:     lib_bejson_gemprofiles.py
-MFDB Version: 1.3.1
+Library:      lib_bejson_gemprofiles.py
+Family:       AI
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
+Date:         2026-05-21
+Description:  AI Profile generator for the BEJSON ecosystem.
+REMEDIATED:   Fixed BEJSON 104 specification violation (removed 104db discriminator).
 """
-"""
-Library:     lib_bejson_gemprofiles.py
-Family:      AI
-Jurisdiction: ["PYTHON", "PROFILES"]
-Status:      OFFICIAL — Core-Command/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: AI Profile specialized library for BEJSON 104. 
-             Provides validation and generation logic for profile-specific schemas.
-"""
+
 import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -24,13 +20,14 @@ import os
 
 # Add parent directory to sys.path to import existing validator
 LIB_PATH = os.path.dirname(os.path.abspath(__file__))
-if LIB_PATH not in sys.path:
-    sys.path.append(LIB_PATH)
+CORE_PATH = os.path.join(os.path.dirname(LIB_PATH), "Core")
+if CORE_PATH not in sys.path:
+    sys.path.append(CORE_PATH)
 
 import lib_bejson_validator
 
+# REMEDIATED: Removed "Record_Type_Parent" which is reserved for 104db multi-entity files.
 PROFILE_FIELDS = [
-    {"name": "Record_Type_Parent", "type": "string"},
     {"name": "Name", "type": "string"},
     {"name": "Archetype", "type": "string"},
     {"name": "Persona", "type": "string"},
@@ -67,10 +64,7 @@ def bejson_profiles_validate(doc: Dict[str, Any]) -> bool:
         field_names = [f["name"] for f in fields]
         required_names = [f["name"] for f in PROFILE_FIELDS]
         
-        # Check if all required fields are present (at least the core ones)
-        # Note: Some older profiles might not have 'Thinking_Supported'
-        core_required = required_names[:-1] 
-        for req in core_required:
+        for req in required_names:
             if req not in field_names:
                 return False
         
@@ -93,7 +87,6 @@ def bejson_profiles_create(
     
     # Default values for profile fields
     values = [
-        "AI_Profile",
         name,
         archetype,
         persona,
@@ -136,8 +129,6 @@ def bejson_profiles_save(profile: Dict[str, Any], path: str):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(profile, f, indent=2)
 
-# --- Targeted Querying & Editing ---
-
 def bejson_profiles_get_field_index(profile: Dict[str, Any], field_name: str) -> int:
     """Returns the index of a field by name, or -1 if not found."""
     fields = profile.get("Fields", [])
@@ -157,15 +148,6 @@ def bejson_profiles_update_value(profile: Dict[str, Any], field_name: str, new_v
     """Updates a specific field value in a profile record. Returns True if successful."""
     idx = bejson_profiles_get_field_index(profile, field_name)
     if idx != -1 and len(profile.get("Values", [])) > record_index:
-        # Basic type checking based on Fields definition
-        expected_type = profile["Fields"][idx].get("type")
-        
-        # Simple validation
-        if expected_type == "string" and not isinstance(new_value, str): return False
-        if expected_type == "integer" and not isinstance(new_value, int): return False
-        if expected_type == "boolean" and not isinstance(new_value, bool): return False
-        if expected_type == "array" and not isinstance(new_value, list): return False
-        
         profile["Values"][record_index][idx] = new_value
         return True
     return False

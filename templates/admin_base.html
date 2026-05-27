@@ -1,4 +1,3 @@
-<!-- ExpCSS Administrative Base | Rebuilt from Library Standard -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,198 +7,160 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/becss-core.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/becss-components.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/becss-headers.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/becss-sidebars.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/becss-footers.css') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- HTML3 Core Styles -->
     <style>
-        /* Force Library Layout (Avoid Tailwind .container conflict) */
-        :root {
-            --primary: #de2626; /* Hex fallback for oklch(65% 0.2 25) */
-            --bg-page: #ffffff;
-            --bg-alt: #f8f9fa;
-            --text-main: #1a1a1a;
-            --text-muted: #666666;
-            --border: #e5e5e5;
-            --sidebar-width: 250px;
+        :root { 
+            --accent: #DE2626; 
+            --bg: #050505; 
+            --surface: #0a0a0a; 
+            --border: #222; 
+            --text: #fff;
+            --text-muted: #888;
+        }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden; 
         }
         
-        html, body {
-            background-color: #ffffff !important;
-            color: #1a1a1a !important;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            -webkit-text-size-adjust: 100%;
+        header { 
+            height: 60px; background: var(--surface); border-bottom: 1px solid var(--border); 
+            display: flex; align-items: center; padding: 0 24px; gap: 20px; flex-shrink: 0;
+            z-index: 100;
+        }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; width: 24px; }
+        .hamburger span { display: block; height: 2px; background: #fff; width: 100%; transition: 0.3s; }
+        .header-logo { font-weight: 800; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; font-size: 1rem; }
+        .emphasis { color: var(--accent); }
+
+        .app-shell { display: flex; flex: 1; overflow: hidden; position: relative; }
+        
+        /* Sidebar */
+        .app-sidebar { 
+            width: 280px; background: var(--surface); border-right: 1px solid var(--border); 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; z-index: 90;
+        }
+        .app-sidebar.collapsed { transform: translateX(-280px); margin-right: -280px; }
+        
+        /* Mobile Overlay */
+        .sidebar-overlay { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 80; 
+        }
+        .sidebar-overlay.active { display: block; }
+
+        /* Main Content */
+        .app-main { 
+            flex: 1; overflow-y: auto; padding: 2rem; position: relative; 
+            scrollbar-width: thin; scrollbar-color: var(--accent) #111; 
+        }
+        
+        @media (max-width: 768px) {
+            .app-sidebar { position: fixed; height: calc(100% - 60px); top: 60px; transform: translateX(-100%); }
+            .app-sidebar.active { transform: translateX(0); }
+            .app-sidebar.collapsed { margin-right: 0; }
         }
 
-        header {
-            display: flex;
-            align-items: center;
-            padding: 12px 24px;
-            border-bottom: 1px solid #e5e5e5;
-            background-color: #ffffff !important;
-            color: #1a1a1a !important;
-        }
+        .breadcrumb-strip { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 1px; }
+        .breadcrumb-strip span { color: var(--accent); }
 
-        .l-admin-layout {
-            display: grid;
-            grid-template-columns: 250px 1fr 280px;
-            gap: 24px;
-            padding: 24px;
-            min-height: calc(100vh - 120px);
-            width: 100%;
-            box-sizing: border-box;
-            background-color: #f8f9fa;
-        }
-
-        .left-column, .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
+        /* Content Cards */
         .content-card {
-            background-color: #ffffff;
-            border: 1px solid #e5e5e5;
-            border-radius: 6px;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            color: #1a1a1a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
-        .sidebar-links {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .sidebar-links a {
-            padding: 10px 16px;
-            border-radius: 6px;
-            color: #1a1a1a;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .sidebar-links a:hover {
-            background-color: #eee;
-        }
-
-        .sidebar-links a.active {
-            background-color: #fff;
-            color: #de2626;
-            font-weight: 700;
-            border-left: 4px solid #de2626;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        /* Responsive Overrides */
-        @media (max-width: 1200px) {
-            .l-admin-layout {
-                grid-template-columns: 250px 1fr;
-            }
-            .right-column { display: none; }
-        }
-
-        @media (max-width: 850px) {
-            .l-admin-layout {
-                grid-template-columns: 1fr;
-                padding: 16px;
-            }
-            .left-column { display: none; }
-        }
-
-        /* Modal / Overlay Fixes */
-        .sidebar-overlay.open { display: block; }
-        
         .flash-message {
             margin-bottom: 24px;
             padding: 16px;
             border-radius: 6px;
             font-weight: 600;
-            background: #e3f2fd;
-            color: #1976d2;
-            border: 1px solid #bbdefb;
+            background: #1a0505;
+            color: var(--accent);
+            border: 1px solid #330000;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .stat-card:hover { border-color: var(--accent); }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+
+        /* Gallery System */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
         }
     </style>
+    
+    <!-- Load Table JS -->
+    <script src="/assets/lib_html3_table-mobile.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
-    <!-- Mobile Navigation (Library Standard) -->
-    <nav class="mobile-sidebar" id="mobileNav">
-        <div class="sidebar-top">
-            <div class="sidebar-header">
-                <span class="sidebar-title">ExpCSS Admin</span>
-                <span class="close-sidebar" id="closeSidebar">&#x2715;</span>
-            </div>
-            <div style="font-weight:600;margin-bottom:12px;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;">Navigation</div>
-            <nav class="sidebar-links">
-                {% set menu = [
-                    {'path': '/', 'label': 'Dashboard', 'icon': 'layout-dashboard'},
-                    {'path': '/categories', 'label': 'Categories', 'icon': 'folder'},
-                    {'path': '/pages', 'label': 'Pages', 'icon': 'file-text'},
-                    {'path': '/apps', 'label': 'Standalone Apps', 'icon': 'cpu'},
-                    {'path': '/media', 'label': 'Media Library', 'icon': 'image'},
-                    {'path': '/authors', 'label': 'Authors', 'icon': 'users'},
-                    {'path': '/navigation', 'label': 'Nav Links', 'icon': 'menu'},
-                    {'path': '/ads', 'label': 'Ad Rotator', 'icon': 'tv'},
-                    {'path': '/preview_srv', 'label': 'Preview Manager', 'icon': 'zap'},
-                    {'path': '/config', 'label': 'Global Config', 'icon': 'settings'}
-                ] %}
-                {% for item in menu %}
-                <a href="{{ item.path }}" class="{% if request.path == item.path %}active{% endif %}">
-                    {{ item.label }}
-                </a>
-                {% endfor %}
-            </nav>
-        </div>
-        <div class="sidebar-bottom">
-            <a href="/build" class="emphasis" style="font-weight: 800; text-decoration: none;">🚀 PUBLISH SITE</a>
-        </div>
-    </nav>
-
-    <!-- Header (Library Standard) -->
     <header>
-        <div class="hamburger" id="hamburgerToggle"><span></span><span></span><span></span></div>
+        <div class="hamburger" id="navToggle"><span></span><span></span><span></span></div>
         <div class="header-logo">ExpCSS<span class="emphasis">Admin</span></div>
-        <div style="margin-left: auto; font-family: 'Roboto Mono', monospace; font-size: 0.75rem; color: var(--text-muted);">
-            DB: <span class="emphasis">CONNECTED</span>
-        </div>
+        <div style="flex:1"></div>
+        <div style="font-size:0.6rem; color:#444; font-family:monospace;">MFDB v1.31 | HTML3 v1.2</div>
     </header>
 
-    <div class="breadcrumbs">
-        <a href="/">Home</a> / <span>{{ request.path.strip('/') | capitalize or 'Dashboard' }}</span>
-    </div>
+    <div class="sidebar-overlay" id="overlay"></div>
 
-    <!-- Main Grid Layout -->
-    <div class="l-admin-layout">
-        <!-- Left Column: Desktop Navigation -->
-        <aside class="left-column">
-            <div class="sidebar-top">
-                <div style="font-weight:600;margin-bottom:12px;padding:0 8px;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;">System Orbit</div>
-                <nav class="sidebar-links">
-                    {% for item in menu %}
-                    <a href="{{ item.path }}" class="{% if request.path == item.path %}active{% endif %}">
-                        {{ item.label }}
-                    </a>
-                    {% endfor %}
-                </nav>
-            </div>
-            <div class="sidebar-bottom">
-                <a href="/build" class="emphasis" style="font-weight: 800; text-decoration: none;">🚀 PUBLISH SITE</a>
-            </div>
+    <div class="app-shell">
+        <aside class="app-sidebar" id="sidebar">
+            {{ sidebar_html | safe }}
         </aside>
 
-        <!-- Middle Column: Main Workspace -->
-        <main class="middle-column">
+        <main class="app-main">
+            <div class="breadcrumb-strip">ADMIN / <span>{{ request.path.strip('/') | capitalize or 'Dashboard' }}</span></div>
+            
             {% with messages = get_flashed_messages() %}
               {% if messages %}
                 {% for message in messages %}
@@ -212,46 +173,33 @@
 
             {% block content %}{% endblock %}
         </main>
-
-        <!-- Right Column: Status/Widgets (Library Standard) -->
-        <aside class="right-column">
-            <div style="font-weight:600;margin-bottom:12px;padding:0 8px;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;">System Health</div>
-            <div class="content-card">
-                <div style="font-family: 'Roboto Mono', monospace; font-size: 0.7rem;">
-                    <p style="margin:4px 0;">NODE: Master</p>
-                    <p style="margin:4px 0;">PORT: 5005</p>
-                    <p style="margin:4px 0;">UPTIME: 99.9%</p>
-                </div>
-            </div>
-            <div style="font-weight:600;margin-bottom:12px;padding:0 8px;color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;">Quick Help</div>
-            <div class="sidebar-bottom">
-                <div style="text-align:center;">MFDB v1.3.1<br><span style="font-size:0.85em;opacity:0.8;">2026 Standard</span></div>
-            </div>
-        </aside>
-    </div>
-
-    <!-- Docked Footer (Library Standard) -->
-    <div class="global-docked-footer">
-        <span style="font-weight:600;">ExpCSS CMS v2.2</span> &nbsp;|&nbsp;
-        <a href="/">Dashboard</a> &nbsp;|&nbsp;
-        <a href="/about">About</a> &nbsp;|&nbsp;
-        <span style="font-family: var(--font-mono);">2026-05-15</span>
     </div>
 
     <script>
-        const hamburgerToggle = document.getElementById('hamburgerToggle');
-        const mobileNav = document.getElementById('mobileNav');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const closeSidebar = document.getElementById('closeSidebar');
+        const btn = document.getElementById('navToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
-        function toggleSidebar() {
-            mobileNav.classList.toggle('open');
-            sidebarOverlay.classList.toggle('open');
+        function toggle() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+            }
         }
 
-        hamburgerToggle.addEventListener('click', toggleSidebar);
-        closeSidebar.addEventListener('click', toggleSidebar);
-        sidebarOverlay.addEventListener('click', toggleSidebar);
+        btn.addEventListener('click', toggle);
+        overlay.addEventListener('click', toggle);
+
+        // Auto-highlight active link
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.c-html3-list__nav-item').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('is-active');
+            }
+        });
 
         lucide.createIcons();
     </script>

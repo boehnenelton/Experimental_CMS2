@@ -23,6 +23,7 @@ import sys
 import json
 import time
 from datetime import datetime
+from lib_bejson_env import resolve_path
 
 # JURISDICTIONS: ["PYTHON", "WEB_ARCHITECTURE", "CORE_COMMAND"]
 
@@ -39,7 +40,7 @@ def get_random_available_port(start=5001, end=5020):
     return None
 
 def register_server(name, port):
-    reg_path = '/Data/Data/com.termux/files/home/Registry/Environment_Registry.bejson.json'
+    reg_path = resolve_path('/Data/Data/com.termux/files/home/Registry/Environment_Registry.bejson.json')
     if not os.path.exists(reg_path): return
     try:
         with open(reg_path, 'r') as f:
@@ -56,7 +57,7 @@ def register_server(name, port):
         print(f" [ServerLib] Registration Error: {e}")
 
 def unregister_server(name):
-    reg_path = '/Data/Data/com.termux/files/home/Registry/Environment_Registry.bejson.json'
+    reg_path = resolve_path('/Data/Data/com.termux/files/home/Registry/Environment_Registry.bejson.json')
     if not os.path.exists(reg_path): return
     try:
         with open(reg_path, 'r') as f:

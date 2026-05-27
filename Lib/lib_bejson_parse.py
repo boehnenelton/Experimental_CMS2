@@ -1,18 +1,20 @@
 """
-Library:     lib_bejson_parse.py
-Family:      Core
-Jurisdiction: ["PYTHON", "SWITCH_CORE"]
-Status:      OFFICIAL — Switch-Core/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: BEJSON structured parser — extracts files from BEJSON 104 / 104a / 104db schemas.
-             Sources lib_bejson_core.py and lib_bejson_validator.py.
+Library:      lib_bejson_parse.py
+Family:       Core
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.1.0 OFFICIAL
+            MFDB Version: 1.31
+Format_Creator: Elton Boehnen
+Date:         2026-05-21
+Description:  Rapid indexing and retrieval engine for dense tabular data.
+              REMEDIATED: Removed all regex usage. Uses strictly string methods.
 """
+
 import datetime
 import json
 import os
-import re
 import shutil
 import tempfile
 import zipfile
@@ -33,12 +35,12 @@ from lib_bejson_validator import (
     bejson_validator_get_report,
 )
 
-# Default output dir (callers may override via cfg)
+# Default output dir
 _SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_OUT  = os.path.join(_SCRIPT_DIR, "output")
 
 # ------------------------------------------------------------------
-# ATOMIC WRITE HELPER (Generic)
+# ATOMIC WRITE HELPER
 # ------------------------------------------------------------------
 
 def _atomic_write_text(file_path: str, content: str) -> None:
@@ -66,14 +68,19 @@ def _atomic_write_text(file_path: str, content: str) -> None:
         raise
 
 # ------------------------------------------------------------------
-# PARSER CORE
+# PARSER CORE (Best Practices - No Regex)
 # ------------------------------------------------------------------
 
 def parse_json(text):
-    match = re.search(r'(\{.*\})', text, re.DOTALL)
-    clean = match.group(1) if match else text
-    return json.loads(clean)
-
+    """Extract and parse JSON using strictly string methods and json module."""
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            return json.loads(text[start:end+1])
+        raise
 
 def extract_data(data):
     fields = data.get("Fields", [])
@@ -83,7 +90,9 @@ def extract_data(data):
 
     f_map = {}
     for i, f in enumerate(fields):
-        key = re.sub(r'[^a-z0-9]', '', f["name"].lower())
+        # Non-regex sanitization: alphanumeric only
+        name = f["name"].lower()
+        key = "".join([c for c in name if c.isalnum()])
         f_map[key] = i
 
     def get_val(row, key):
@@ -104,7 +113,10 @@ def extract_data(data):
         if project_name != "My_Project":
             break
 
-    project_name = re.sub(r'[<>:"/\\|?*]', '_', project_name)
+    # Non-regex sanitization for filesystem safety
+    invalid_chars = '<>:"/\\|?*'
+    for char in invalid_chars:
+        project_name = project_name.replace(char, '_')
 
     files = []
     for row in values:
@@ -115,7 +127,6 @@ def extract_data(data):
                 files.append({"name": fname, "content": fcont})
 
     return project_name, files
-
 
 def save_files(proj, files, cfg):
     base_dir = cfg.get("output_path") or DEFAULT_OUT
@@ -179,10 +190,8 @@ def save_files(proj, files, cfg):
         report_path = os.path.join(target, "_REPORT.txt")
         _atomic_write_text(report_path, report_text)
 
-        # Build zip (files + report)
+        # Build zip
         zip_path = os.path.join(target, proj + "_update.zip")
-        # Zip is somewhat atomic if we write to temp and rename, but zipfile doesn't support fsync directly easily.
-        # For this library, we'll focus on the text files being atomic.
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
             for f in files:
                 zf.writestr(f["name"], f["content"])

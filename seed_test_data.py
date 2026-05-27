@@ -88,7 +88,13 @@ def seed():
     app_dir = os.path.join(cms.apps_dir, app_uuid)
     os.makedirs(app_dir, exist_ok=True)
     # Copy from project root to app storage
-    shutil.copy("/storage/emulated/0/Projects/Management/Dev/Python/BEJSON_Legacy_CMS/MFDB-CMS-Reborn/drawing-app.html", os.path.join(app_dir, "index.html"))
+    _src = os.path.join(BASE_DIR, "drawing-app.html")
+    _dst = os.path.join(app_dir, "index.html")
+    if os.path.exists(_src):
+        shutil.copy(_src, _dst)
+    else:
+        with open(_dst, "w") as _f:
+            _f.write("<h1>NexusDraw</h1><p>Place drawing-app.html in the project root to deploy.</p>")
 
     print("Seed complete.")
 

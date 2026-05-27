@@ -1,13 +1,13 @@
 # RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4
-# VERSION: v2.0.0
+# VERSION: v2.2.0 (HTML3 Integrated)
 # CREDITS: Elton Boehnen (github.com/boehnenelton)
-# DATE: 2026-05-15
+# DATE: 2026-05-22
 # FILE: ExpCSS_CMS.py
 
 """
-Experimental CSS CMS v2.0 - Unified Administrative Dashboard
+Experimental CSS CMS v2.2 - Unified Administrative Dashboard (HTML3)
 Description: Unified management tool for MFDB data, content editing, and site deployment.
-             Rebuilt with standardized BEJSON HTML Scaffolding.
+             Updated with HTML3 Layout, List Renderer, and Dynamic Tables.
 """
 import os
 import sys
@@ -29,6 +29,12 @@ if LIB_DIR not in sys.path:
     sys.path.append(LIB_DIR)
 
 from lib_cms_mfdb import MFDB_CMS_Manager
+from lib_html3_app_layout import HTML3_App_Layout
+from lib_html3_list_renderer import HTML3_List_Renderer
+from lib_html3_body import html_card, html_stats_bar, html_code_box, html_brutal_table
+from lib_html3_tables import html_table
+from lib_html3_widgets import html_widget, html_info_box
+from lib_cms_chunker_wrapper import CMS_Chunker_Wrapper
 import lib_mfdb_core as MFDBCore
 
 # --- Flask App Initialization ---
@@ -42,9 +48,26 @@ app = Flask(__name__,
 app.secret_key = 'expcss-unified-v2-secret'
 app.jinja_env.add_extension('jinja2.ext.do')
 
+@app.context_processor
+def inject_html3():
+    return dict(
+        html_card=html_card,
+        html_stats_bar=html_stats_bar,
+        html_code_box=html_code_box,
+        html_brutal_table=html_brutal_table,
+        html_table=html_table,
+        html_widget=html_widget,
+        html_info_box=html_info_box
+    )
+
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    return send_from_directory(os.path.join(BASE_DIR, "Assets"), filename)
+
 DATA_ROOT = os.path.join(BASE_DIR, "Data")
 WWW_ROOT = os.path.join(BASE_DIR, "Processing", "www")
 cms = MFDB_CMS_Manager(DATA_ROOT)
+chunker = CMS_Chunker_Wrapper(cms)
 
 # Initialize databases on start
 with app.app_context():
@@ -155,13 +178,13 @@ def categories():
         flash('Category added successfully')
         return redirect(url_for('categories'))
     
-    cats = MFDBCore.mfdb_core_load_entity(cms.content_manifest, "Category")
-    return render_template("categories.html", cats=cats)
+    cats_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_manifest_dir, "category.bejson"))
+    return render_template("categories.html", cats_doc=cats_doc)
 
 @app.route('/pages')
 def pages():
-    pages_list = MFDBCore.mfdb_core_load_entity(cms.content_manifest, "Page")
-    return render_template("editor_list.html", pages=pages_list)
+    pages_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_manifest_dir, "page.bejson"))
+    return render_template("editor_list.html", pages_doc=pages_doc)
 
 @app.route('/new')
 def new_page():
@@ -368,6 +391,82 @@ def srv_stop():
         _preview_srv["running"] = False
         flash("Preview server stopped")
     return redirect(url_for('preview_manager'))
+
+
+# =============================================================================
+# BACKUP & CHUNKING
+# =============================================================================
+
+@app.route('/backups')
+def backups():
+    all_backups = chunker.list_backups()
+    return render_template("backups.html", backups=all_backups)
+
+@app.route('/backup/create', methods=['POST'])
+def backup_create():
+    changelog = request.form.get("changelog", "Manual Backup")
+    result = chunker.backup_site(changelog=changelog)
+    if result["success"]:
+        flash(f"Backup created: {result['zip_path']}")
+    else:
+        flash(f"Backup failed: {result['error']}")
+    return redirect(url_for('backups'))
+
+@app.route('/backup/restore', methods=['POST'])
+def backup_restore():
+    filename = request.form.get("filename")
+    result = chunker.restore_site(filename)
+    if result["success"]:
+        flash(result["message"])
+    else:
+        flash(f"Restore failed: {result['error']}")
+    return redirect(url_for('backups'))
+
+@app.route('/backup/download/<filename>')
+def backup_download(filename):
+    return send_from_directory(chunker.backup_dir, filename, as_attachment=True)
+
+# --- HTML3 Integration ---
+def get_sidebar_html():
+    renderer = HTML3_List_Renderer()
+    nav_data = {
+        "Format": "BEJSON",
+        "Format_Version": "104",
+        "Format_Creator": "Elton Boehnen",
+        "Records_Type": ["NavItem"],
+        "Fields": [
+            {"name": "id", "type": "string"},
+            {"name": "title", "type": "string"},
+            {"name": "description", "type": "string"},
+            {"name": "parent_id_fk", "type": "string"},
+            {"name": "url", "type": "string"}
+        ],
+        "Values": [
+            ["d1", "Dashboard", "", None, "/"],
+            ["c1", "Categories", "", None, "/categories"],
+            ["p1", "Pages", "", None, "/pages"],
+            ["a1", "Standalone Apps", "", None, "/apps"],
+            ["m1", "Media Library", "", None, "/media"],
+            ["au1", "Authors", "", None, "/authors"],
+            ["n1", "Nav Links", "", None, "/navigation"],
+            ["ad1", "Ad Rotator", "", None, "/ads"],
+            ["pr1", "Preview Manager", "", None, "/preview_srv"],
+            ["bk1", "Site Backups", "", None, "/backups"],
+            ["cfg1", "Global Config", "", None, "/config"]
+        ]
+    }
+    temp_path = os.path.join(BASE_DIR, "Data", "admin_nav.bejson")
+    with open(temp_path, 'w') as f:
+        json.dump(nav_data, f)
+    
+    return renderer.render(temp_path, mode="SIDEBAR", title="System Orbit")
+
+@app.context_processor
+def inject_html3():
+    return dict(
+        sidebar_html=get_sidebar_html(),
+        html3_layout=HTML3_App_Layout()
+    )
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5005, debug=True)

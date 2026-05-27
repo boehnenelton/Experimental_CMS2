@@ -1,0 +1,26 @@
+{
+  "project_name": "www",
+  "version": "1.0.2",
+  "extensions": [
+    ".py",
+    ".js",
+    ".ts",
+    ".html",
+    ".css",
+    ".md",
+    ".json",
+    ".sh",
+    ".txt",
+    ".bejson"
+  ],
+  "exclude_dirs": [
+    ".git",
+    "__pycache__",
+    "node_modules",
+    "lib",
+    "output",
+    ".mfdb_lock"
+  ],
+  "output_base": "/storage/emulated/0/Admin/dev/Python/Experimental_CMS2/Lib/output",
+  "include_binary_base64": false
+}

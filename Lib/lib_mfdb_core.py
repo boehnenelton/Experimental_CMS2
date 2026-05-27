@@ -1,21 +1,18 @@
 """
-Library:     lib_mfdb_core.py
-Family:      Core
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — Core-Command/Lib (v1.3)
-Author:      Elton Boehnen
-Version:     1.3 OFFICIAL
-MFDB Version: 1.3.1
-Date:        2026-05-01
-Description: MFDB (Multifile Database) core operations.
-             Layers on lib_bejson_core.py and lib_mfdb_validator.py.
-             Provides create, read, write, query, join, and sync
-             operations across MFDB entity files and their manifest.
-             v1.2 adds MFDBArchive support for .mfdb.zip transport.
-             v1.3 adds Master/Slave Federation standards.
-
-             v1.21 adds Dynamic Recovery and Self-Healing.
+Library:      lib_mfdb_core.py
+Family:       Core
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
+Format_Creator: Elton Boehnen
+Date:         2026-05-18
+Description:  Multi-file database orchestrator managing manifests and entity synchronization.
 """
+
+# v1.21 adds Dynamic Recovery and Self-Healing.
+
 import json
 import os
 import shutil
@@ -24,7 +21,7 @@ import zipfile
 import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 from lib_bejson_core import (
     BEJSONCoreError,
@@ -41,7 +38,6 @@ from lib_bejson_core import (
 from lib_mfdb_validator import (
     MFDBValidationError,
     mfdb_validator_validate_manifest,
-    mfdb_validator_validate_entity_file,
     _load_json,
     _rows_as_dicts,
     _resolve_entity_path,
@@ -50,19 +46,19 @@ from lib_mfdb_validator import (
     E_MFDB_MANIFEST_NOT_FOUND,
 )
 
-# ---------------------------------------------------------------------------
-# Error codes (50–79)
-# ---------------------------------------------------------------------------
-
-E_MFDB_CORE_MANIFEST_NOT_FOUND  = 50
-E_MFDB_CORE_ENTITY_NOT_FOUND    = 51
-E_MFDB_CORE_WRITE_FAILED        = 52
-E_MFDB_CORE_CREATE_FAILED       = 53
-E_MFDB_CORE_INVALID_OPERATION   = 54
-E_MFDB_CORE_INDEX_OUT_OF_BOUNDS = 55
-E_MFDB_CORE_JOIN_FAILED         = 56
-E_MFDB_CORE_ARCHIVE_ERROR       = 70
-E_MFDB_CORE_MOUNT_CONFLICT      = 71
+try:
+    from lib_bejson_errors import *
+except ImportError:
+    # Fallback if registry is missing
+    E_MFDB_CORE_MANIFEST_NOT_FOUND  = 50
+    E_MFDB_CORE_ENTITY_NOT_FOUND    = 51
+    E_MFDB_CORE_WRITE_FAILED        = 52
+    E_MFDB_CORE_CREATE_FAILED       = 53
+    E_MFDB_CORE_INVALID_OPERATION   = 54
+    E_MFDB_CORE_INDEX_OUT_OF_BOUNDS = 55
+    E_MFDB_CORE_JOIN_FAILED         = 56
+    E_MFDB_CORE_ARCHIVE_ERROR       = 70
+    E_MFDB_CORE_MOUNT_CONFLICT      = 71
 
 
 class MFDBCoreError(Exception):
@@ -368,12 +364,133 @@ def mfdb_core_discover(file_path: str) -> str:
 # Recovery & Repair (v1.21 Feature)
 # ---------------------------------------------------------------------------
 
+def mfdb_core_deep_verify(manifest_path: str) -> List[Dict[str, Any]]:
+    """
+    Performs a deep audit of the entire MFDB database.
+    Checks for:
+      - Positional integrity (field vs value length)
+      - Type adherence (basic primitives)
+      - Manifest-entity consistency (record counts)
+      - Foreign key potential breakage (optional warnings)
+    Returns a list of finding dicts.
+    """
+    findings = []
+    manifest_doc = bejson_core_load_file(manifest_path)
+    entries = _rows_as_dicts(manifest_doc)
+    
+    for entry in entries:
+        entity_name = entry.get("entity_name")
+        file_path_rel = entry.get("file_path")
+        expected_count = entry.get("record_count")
+        
+        entity_path = _resolve_entity_path(manifest_path, file_path_rel)
+        if not os.path.exists(entity_path):
+            findings.append({"entity": entity_name, "error": "MISSING_FILE", "path": file_path_rel})
+            continue
+            
+        try:
+            entity_doc = bejson_core_load_file(entity_path)
+            # 1. Check positional integrity
+            fields = entity_doc.get("Fields", [])
+            field_count = len(fields)
+            values = entity_doc.get("Values", [])
+            actual_count = len(values)
+            
+            if expected_count is not None and expected_count != actual_count:
+                findings.append({
+                    "entity": entity_name, 
+                    "warning": "COUNT_MISMATCH", 
+                    "expected": expected_count, 
+                    "actual": actual_count
+                })
+            
+            for i, row in enumerate(values):
+                if len(row) != field_count:
+                    findings.append({
+                        "entity": entity_name, 
+                        "error": "POSITIONAL_VIOLATION", 
+                        "row": i, 
+                        "expected": field_count, 
+                        "actual": len(row)
+                    })
+                
+                # 2. Basic Type verification
+                for j, val in enumerate(row):
+                    if val is None: continue
+                    f_type = fields[j].get("type")
+                    if f_type == "integer" and not isinstance(val, int):
+                         findings.append({"entity": entity_name, "warning": "TYPE_MISMATCH", "row": i, "field": fields[j]["name"], "expected": "integer", "actual": type(val).__name__})
+                    elif f_type == "number" and not isinstance(val, (int, float)):
+                         findings.append({"entity": entity_name, "warning": "TYPE_MISMATCH", "row": i, "field": fields[j]["name"], "expected": "number", "actual": type(val).__name__})
+                    elif f_type == "boolean" and not isinstance(val, bool):
+                         findings.append({"entity": entity_name, "warning": "TYPE_MISMATCH", "row": i, "field": fields[j]["name"], "expected": "boolean", "actual": type(val).__name__})
+
+        except Exception as e:
+            findings.append({"entity": entity_name, "error": "CORRUPT_JSON", "message": str(e)})
+            
+    return findings
+
+
+def mfdb_core_self_heal(manifest_path: str) -> Dict[str, Any]:
+    """
+    Attempts to fix common issues identified by deep_verify.
+    Actions:
+      - Resyncs record_count in manifest.
+      - Padds short records with nulls (Positional Repair).
+      - Removes invalid records if necessary (Extreme measure).
+    Returns a report of actions taken.
+    """
+    report = {"actions": [], "remaining_errors": []}
+    findings = mfdb_core_deep_verify(manifest_path)
+    
+    needs_manifest_sync = False
+    
+    for f in findings:
+        entity = f.get("entity")
+        if f.get("warning") == "COUNT_MISMATCH":
+            _update_manifest_record_count(manifest_path, entity, f["actual"])
+            report["actions"].append(f"Resynced record_count for {entity} to {f['actual']}")
+        
+        elif f.get("error") == "POSITIONAL_VIOLATION":
+            # Attempt repair
+            entity_path = _get_entity_path(manifest_path, entity)
+            try:
+                doc = bejson_core_load_file(entity_path)
+                field_count = len(doc["Fields"])
+                repaired = 0
+                for i, row in enumerate(doc["Values"]):
+                    if len(row) < field_count:
+                        doc["Values"][i] = row + [None] * (field_count - len(row))
+                        repaired += 1
+                    elif len(row) > field_count:
+                        doc["Values"][i] = row[:field_count]
+                        repaired += 1
+                if repaired > 0:
+                    bejson_core_atomic_write(entity_path, doc)
+                    report["actions"].append(f"Repaired {repaired} positional violations in {entity}")
+            except Exception as e:
+                report["remaining_errors"].append(f"Failed to repair {entity}: {str(e)}")
+        
+        elif f.get("error") == "MISSING_FILE":
+            # Attempt resurrection
+            mount_dir = os.path.dirname(os.path.abspath(manifest_path))
+            if MFDBArchive.resurrect_file(mount_dir, f["path"]):
+                report["actions"].append(f"Resurrected missing entity file: {f['path']}")
+            else:
+                report["remaining_errors"].append(f"Could not resurrect {entity}")
+        
+        elif f.get("error"):
+            report["remaining_errors"].append(f"{entity}: {f['error']} - {f.get('message', '')}")
+
+    return report
+
+
 def _mfdb_core_repair_hierarchy(entity_path: str, new_hierarchy: str) -> bool:
     """Surgically update the Parent_Hierarchy header in a BEJSON 104 file."""
     try:
         doc = bejson_core_load_file(entity_path)
         doc["Parent_Hierarchy"] = new_hierarchy
-        bejson_core_atomic_write(entity_path, doc, create_backup=True)
+        bejson_core_atomic_write(entity_path, doc)
         return True
     except Exception:
         return False
@@ -425,7 +542,7 @@ def mfdb_core_load_manifest(manifest_path: str) -> list[dict]:
 def mfdb_core_load_entity(manifest_path: str, entity_name: str) -> list[dict]:
     """
     Load all records for a named entity.
-    Returns a list of field-name-keyed dicts (dense — no null-padding).
+    Returns a list of field-name-keyed dicts (dense - no null-padding).
     """
     doc = _load_entity_doc(manifest_path, entity_name)
     return _rows_as_dicts(doc)
@@ -724,27 +841,22 @@ def mfdb_core_create_database(
 
 def mfdb_core_resolve_path(path_str: str) -> str:
     """
-    Hardening: Resolve system placeholders in paths.
+    Hardening: Resolve system placeholders in paths using lib_bejson_env.
     Supports: {INTERNAL_STORAGE}, {SC_ROOT}, {PROJECTS_MGMT}, {ADMIN_LAYER}, 
              internal_storage, ~, and environment variables in ${VAR} format.
     """
     if not path_str:
         return path_str
     
-    sc_root = os.getenv("SC_ROOT", "/storage/emulated/0/Brain-Container/BEJSON_Core")
-    mappings = {
-        "{INTERNAL_STORAGE}": os.getenv("INTERNAL_STORAGE", "/storage/emulated/0"),
-        "internal_storage": os.getenv("INTERNAL_STORAGE", "/storage/emulated/0"),
-        "{SC_ROOT}": sc_root,
-        "{PROJECTS_MGMT}": os.getenv("PROJECTS_MGMT", "/storage/emulated/0/Projects/Management"),
-        "{ADMIN_LAYER}": os.getenv("ADMIN_LAYER", "/storage/emulated/0/Administrative_Layer"),
-    }
-    
-    resolved = str(path_str)
-    for placeholder, actual in mappings.items():
-        if actual:
-            resolved = resolved.replace(placeholder, actual)
-    
-    resolved = os.path.expanduser(resolved)
-    resolved = os.path.expandvars(resolved)
-    return os.path.normpath(resolved)
+    try:
+        from lib_bejson_env import resolve_path
+        return resolve_path(path_str)
+    except ImportError:
+        # Minimal fallback without hardcoded absolute strings
+        # Defaults are handled inside resolve_path if imported, 
+        # otherwise we just expand ~ and vars
+        resolved = str(path_str)
+        # Expansion only
+        resolved = os.path.expanduser(resolved)
+        resolved = os.path.expandvars(resolved)
+        return os.path.normpath(resolved)

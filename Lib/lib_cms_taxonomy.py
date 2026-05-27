@@ -1,26 +1,20 @@
 """
-Library:     lib_cms_taxonomy.py
-MFDB Version: 1.3.1
+Library:      lib_cms_taxonomy.py
+Family:       CMS
+Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
+Status:       OFFICIAL
+Author:       Elton Boehnen
+Version:      2.0.1 OFFICIAL
+            MFDB Version: 1.31
 Format_Creator: Elton Boehnen
-Status:      OFFICIAL - v1.3.1
-Date:        2026-05-06
-"""
-"""
-Library:     lib_cms_taxonomy.py
-Family:      CMS
-Jurisdiction: ["PYTHON", "BEJSON_LIBRARIES"]
-Status:      OFFICIAL — BEJSON/Lib (v1.5)
-Author:      Elton Boehnen
-Version:     1.5 OFFICIAL
-Date:        2026-05-01
-Description: Backend library for managing CMS categories, tags, and authors.
-             Part of the Modular CMS Backend Framework.
+Date:         2026-05-18
+Description:  Category and tag manager for CMS data structures.
 """
 
 import os
 import sys
 import re
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional
 
 # Ensure local directory is in path for relative imports
 LIB_DIR = os.path.dirname(os.path.abspath(__file__))
