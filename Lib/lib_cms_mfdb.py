@@ -4,7 +4,7 @@ Family:       CMS
 Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
 Status:       OFFICIAL
 Author:       Elton Boehnen
-Version:      2.0.1 OFFICIAL
+Version:      2.0.2 OFFICIAL
             MFDB Version: 1.31
 Format_Creator: Elton Boehnen
 Date:         2026-05-18
@@ -181,6 +181,9 @@ class MFDB_CMS_Manager:
         MFDBCore.mfdb_core_add_entity_record(self.global_manifest, "AdUnit", [auuid, name, img, link, zone, active])
         self.log_change("AdUnit", "ADD", auuid)
         return auuid
+
+    def get_ads(self) -> List[Dict]:
+        return MFDBCore.mfdb_core_load_entity(self.global_manifest, "AdUnit")
 
     def add_asset(self, filename: str, original_name: str, file_hash: str, file_size: int, mime_type: str):
         uploaded_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

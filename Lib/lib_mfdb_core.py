@@ -4,7 +4,7 @@ Family:       Core
 Jurisdiction: ["BEJSON_LIBRARIES", "PY"]
 Status:       OFFICIAL
 Author:       Elton Boehnen
-Version:      2.0.1 OFFICIAL
+Version:      2.0.2 OFFICIAL
             MFDB Version: 1.31
 Format_Creator: Elton Boehnen
 Date:         2026-05-18
@@ -645,7 +645,7 @@ def mfdb_core_add_entity_record(
     """Append a record to an entity file."""
     entity_path = _get_entity_path(manifest_path, entity_name)
     doc         = bejson_core_load_file(entity_path)
-    doc         = bejson_core_add_record(doc, values)
+    bejson_core_add_record(doc, values)
     _write_entity_doc(doc, entity_path)
     if sync_count:
         _update_manifest_record_count(manifest_path, entity_name, len(doc["Values"]))
@@ -661,7 +661,7 @@ def mfdb_core_remove_entity_record(
     """Remove a record at record_index from an entity file."""
     entity_path = _get_entity_path(manifest_path, entity_name)
     doc         = bejson_core_load_file(entity_path)
-    doc         = bejson_core_remove_record(doc, record_index)
+    bejson_core_remove_record(doc, record_index)
     _write_entity_doc(doc, entity_path)
     if sync_count:
         _update_manifest_record_count(manifest_path, entity_name, len(doc["Values"]))
@@ -678,7 +678,13 @@ def mfdb_core_update_entity_record(
     """Update a single named field in a specific record of an entity file."""
     entity_path = _get_entity_path(manifest_path, entity_name)
     doc         = bejson_core_load_file(entity_path)
-    doc         = bejson_core_update_field(doc, record_index, field_name, new_value)
+    field_idx   = bejson_core_get_field_index(doc, field_name)
+    if field_idx == -1:
+        raise MFDBCoreError(
+            f"Field '{field_name}' not found in entity '{entity_name}'",
+            E_MFDB_CORE_INVALID_OPERATION,
+        )
+    bejson_core_update_field(doc, record_index, field_idx, new_value)
     _write_entity_doc(doc, entity_path)
     return doc
 
