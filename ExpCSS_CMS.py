@@ -1,11 +1,11 @@
 # RELATIONAL_GUID: 3e685944-8c75-4d43-bdab-8bc89548dba4
-# VERSION: v2.2.0 (HTML3 Integrated)
+# VERSION: v2.2.1 (HTML3 Integrated)
 # CREDITS: Elton Boehnen (github.com/boehnenelton)
 # DATE: 2026-05-22
 # FILE: ExpCSS_CMS.py
 
 """
-Experimental CSS CMS v2.2 - Unified Administrative Dashboard (HTML3)
+Experimental CSS CMS v2.2.1 - Unified Administrative Dashboard (HTML3)
 Description: Unified management tool for MFDB data, content editing, and site deployment.
              Updated with HTML3 Layout, List Renderer, and Dynamic Tables.
 """
@@ -178,12 +178,12 @@ def categories():
         flash('Category added successfully')
         return redirect(url_for('categories'))
     
-    cats_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_manifest_dir, "category.bejson"))
+    cats_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_db_root, "data", "category.bejson"))
     return render_template("categories.html", cats_doc=cats_doc)
 
 @app.route('/pages')
 def pages():
-    pages_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_manifest_dir, "page.bejson"))
+    pages_doc = MFDBCore.bejson_core_load_file(os.path.join(cms.content_db_root, "data", "page.bejson"))
     return render_template("editor_list.html", pages_doc=pages_doc)
 
 @app.route('/new')
